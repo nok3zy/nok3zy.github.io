@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "contrast" # "air", "aqua", "contrast", "dark", "dirt
 
 # Site Settings
 locale                   : "en-US"
-title                    : "MEMO"
+title                    : "still idiot"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "NOK3ZY"
@@ -95,7 +95,7 @@ analytics:
 author:
   name             : "NOK3ZY"
   avatar           : "/assets/images/A.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Maybe **IDIOT?**."
+  bio              : "Maybe **IDIOT**."
   location         : "Somewhere"
   email            :
   links:
