@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "contrast" # "air", "aqua", "contrast", "dark", "dirt
 
 # Site Settings
 locale                   : "en-US"
-title                    : "still idiot"
+title                    : "Still idiot"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "NOK3ZY"
@@ -51,7 +51,7 @@ reCaptcha:
   secret                 :
 atom_feed:
   path                   : # blank (default) uses feed.xml
-search                   : true # true, false (default)
+search                   : false # true, false (default)
 search_full_content      : # true, false (default)
 search_provider          : algolia # lunr (default), algolia, google
 algolia:
