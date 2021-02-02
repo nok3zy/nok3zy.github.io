@@ -79,7 +79,7 @@ body {
 
 .page__lead {
   font-family: $global-font-family;
-  font-size: $type-size-4;
+  font-size: $type-size-3;
 }
 
 .page__content {
@@ -108,7 +108,7 @@ body {
   p,
   li,
   dl {
-    font-size: 1em;
+    font-size: $type-size-8;
   }
 
   /* paragraph indents */
@@ -126,7 +126,9 @@ body {
 
   a:not(.btn) {
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      color: purple;
+      font-weight :600;
 
       img {
         box-shadow: 0 0 10px rgba(#000, 0.25);
@@ -147,7 +149,7 @@ body {
   }
 
   .small {
-    font-size: $type-size-6;
+    font-size: $type-size-8;
   }
 
   /* blockquote citations */
@@ -306,7 +308,7 @@ body {
 }
 
 /*
-   Page taxonomy
+   Page taxonomy 페이지 분류
    ========================================================================== */
 
 .page__taxonomy {
