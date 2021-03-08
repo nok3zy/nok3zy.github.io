@@ -1,5 +1,5 @@
 ---
 title: "home"
-layout: home
+layout: category
 permalink: /home/
 ---
