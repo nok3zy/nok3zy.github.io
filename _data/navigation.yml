@@ -6,6 +6,8 @@ main:
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   - title: "TODAY"
     url: /today/
+  - title: "home"
+    url: /home/
   # - title: "Collections"
   #   url: /collection-archive/
   - title: "Categories"
