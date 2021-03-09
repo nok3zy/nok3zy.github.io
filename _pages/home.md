@@ -1,5 +1,5 @@
 ---
 title: "home"
-layout: splash
+layout: compress
 permalink: /home/
 ---
