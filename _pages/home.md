@@ -1,5 +1,5 @@
 ---
 title: "home"
-layout: category
+layout: splash
 permalink: /home/
 ---
