@@ -1,6 +1,6 @@
 ---
 title: "TODAY"
 permalink: /today/
-layout: posts
+layout: category
 author_profile: true
 ---
