@@ -6,7 +6,18 @@
     <description>Recent content on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Jan 2023 01:13:08 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 15 Jan 2023 21:49:24 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Clean Architecture</title>
+      <link>https://nok3zy.github.io/posts/clean-architecture/</link>
+      <pubDate>Sun, 15 Jan 2023 21:49:24 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/clean-architecture/</guid>
+      <description>클린 아키텍처가 뭐죠 🔗내가 클린 아키텍처를 고민하기 시작한 것은 내가 처음부터 빌딩하던 프로젝트 팀에서 다른 팀으로 이동하고 나서부터다. 팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. (물론 레거시도 많아서 더 복잡해보인 것은 비밀이 아니다.)
+&amp;ldquo;이 아키텍처는 클린 아키텍처에 기반해서 만들었어요.&amp;rdquo;
+그 말에 바로 클린 아키텍처부터 읽었다. 좋은 책이라고 들었었지만 정말 좋은 책이었다. 물론 한번에 모든 걸 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.</description>
+    </item>
+    
     <item>
       <title>2022년 회고</title>
       <link>https://nok3zy.github.io/posts/2022%EB%85%84-%ED%9A%8C%EA%B3%A0/</link>

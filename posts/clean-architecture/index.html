@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Clean Architecture | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="클린 아키텍처가 뭐죠 🔗내가 클린 아키텍처를 고민하기 시작한 것은 내가 처음부터 빌딩하던 프로젝트 팀에서 다른 팀으로 이동하고 나서부터다. 팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. (물론 레거시도 많아서 더 복잡해보인 것은 비밀이 아니다.)
+&ldquo;이 아키텍처는 클린 아키텍처에 기반해서 만들었어요.&rdquo;
+그 말에 바로 클린 아키텍처부터 읽었다. 좋은 책이라고 들었었지만 정말 좋은 책이었다. 물론 한번에 모든 걸 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">Clean Architecture</h1>
+
+    <div class="tip">
+        <time datetime="2023-01-15 21:49:24 &#43;0900 KST">Jan 15, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          448 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          3 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h1 id="클린-아키텍처가-뭐죠">클린 아키텍처가 뭐죠 <a href="#%ed%81%b4%eb%a6%b0-%ec%95%84%ed%82%a4%ed%85%8d%ec%b2%98%ea%b0%80-%eb%ad%90%ec%a3%a0" class="anchor">🔗</a></h1><p>내가 클린 아키텍처를 고민하기 시작한 것은 내가 처음부터 빌딩하던 프로젝트 팀에서 다른 팀으로 이동하고 나서부터다.
+팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. <br>
+(물론 레거시도 많아서 더 복잡해보인 것은 비밀이 아니다.)</p>
+<blockquote>
+<p>&ldquo;이 아키텍처는 클린 아키텍처에 기반해서 만들었어요.&rdquo;</p>
+</blockquote>
+<p>그 말에 바로 <code>클린 아키텍처</code>부터 읽었다. 좋은 책이라고 들었었지만 정말 좋은 책이었다. 물론 한번에 모든 걸 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.</p>
+<p>그리고 그 팀의 프로젝트는 꽤 잘 만들어진 아키텍처였다.</p>
+<h1 id="의존성-분리">의존성 분리 <a href="#%ec%9d%98%ec%a1%b4%ec%84%b1-%eb%b6%84%eb%a6%ac" class="anchor">🔗</a></h1><p>클린 아키텍처를 한마디로 정의하라고 한다면, 나는 <code>모듈 간 의존성 관리</code>라고 하고 싶다. A가 B에 의존성이 생긴다는 의미는 B가 변경되면 A가 변한다는 의미다. 이러한 <strong>모듈간 의존성을 의도적으로 관리</strong>하는 것이 클린 아키텍처다.</p>
+<p>우리는 서비스를 제공하기 위해 비지니스 로직을 만들고, 그를 위한 API와 DB를 만든다. 그리고 이런 기능들은 프레임워크에서 많이들 제공하고 있다.</p>
+<p>예를 들어, Spring을 사용한다면, Spring Web과 JPA에서 제공하는 어노테이션들로 정말 간단하게 구현을 할 수 있다. 그리고 그렇게 계속 하다보면 우리의 프로젝트는 Spring Framework에 의존성이 생겨서 새로운 로직을 짜기 위해서 Spring에 대한 것을 무조건적으로 알아야하는 상황에 빠진다.</p>
+<p>그리고 위의 상황은 내가 실제로 겪었던 상황이다. 외부 프레임워크의 기능을 너무 애용한 나머지 비지니스 로직에도 영향이 미쳤다. 비지니스 로직이 변경되거나 새로운 로직을 만들 때마다 매미처럼 프레임워크에 매달려 있었다.</p>
+<p>클린 아키텍쳐에서는 &ldquo;프레임워크조차 의존성이므로 적절히 사용해야한다.&ldquo;라고 명시하고 있다. 그리고 그것이 비지니스 로직을 다른 외부 요인들로 부터 안전하게 지키기 위한 첫번째 방법이다. 그렇다면 어떻게 사용해야 옳은 것일까? 정답은 일단 모듈화를 해야 한다.</p>
+<p>간단하게 설명하자면, <code>API를 제공하는 모듈(presentation)</code>, <code>비지니스 로직를 제공하는 모듈(business)</code>, <code>DB에 접근하는 모듈(database)</code>로 하나의 프로젝트를 구성해야 한다. (클린 아키텍처에서는 헥사고날 아키텍처에 대해 이야기하고 있지만 간소화했다.)</p>
+<p>여기서 가장 중요한 로직은 business 모듈이다. 모든 비지니스 로직을 다루고 있어서 서비스를 위해 가장 중요하다. 따라서 변경이 최대한 일어나면 안되므로, 어느 모듈에도 의존성을 가지고 있으면 안된다. 프레임워크도 business에 존재하지 않는 것이 좋다.</p>
+<p>반면에, presentation이나 database는 business에 의존성을 가지고 있고 다른 프레임워크를 사용해도 좋다. (물론 적절히 사용하는 방향으로 가는 것이 가장 좋다.)</p>
+<h1 id="독립적인-개발">독립적인 개발 <a href="#%eb%8f%85%eb%a6%bd%ec%a0%81%ec%9d%b8-%ea%b0%9c%eb%b0%9c" class="anchor">🔗</a></h1><p>이렇게 모듈간 분리를 하면 일단 독립적인 개발이 가능해진다. business가 database나 presentation이 어떻게 동작하는 지 알 필요가 없어진다. 어떤 프레임워크를 사용하는 지, 어떤 로직이 이용되는 지는 관심 외의 일이다.</p>
+<blockquote>
+<p>f(input) = output</p>
+</blockquote>
+<p>오로지 input과 output만을 신경쓰면 된다. 따라서 business에서는 interface로 구현된 정보를 가지고 이어주기만 하면 된다. 도메인도 서비스에 알맞게 구성할 수도 있고 오염되지 않는다. 그리고 다른 모듈에서는 business에서 정의된 interface를 override해서 실제 구현을 해주면 된다.</p>
+<h1 id="마치면서">마치면서 <a href="#%eb%a7%88%ec%b9%98%eb%a9%b4%ec%84%9c" class="anchor">🔗</a></h1><p>반드시 <code>클린 아키텍처</code>를 읽어보고 <a href="https://techblog.woowahan.com/2637/" target="_blank" rel="noopener">우아한형제들 멀티 모듈</a>도 읽어봤으면 좋겠다. 클린 아키텍처에 대해 공부하면서 많이 영감을 받았다.
+또한 <code>만들면서 배우는 클린아키텍처</code>도 읽으면 좋을 것 같다.</p>
+<p>그리고 클린 아키텍처를 읽다보면 DDD와 이벤트소싱에 대해서도 설명하는데, 이도 같이 공부해보면 정말 좋을 것 같다. 하지만 정말 실천하기 어려운 것 같다. 언젠가 DDD와 이벤트소싱도 잘 사용하는 프로젝트를 만들어 보고 싶다.</p>
+<h3 id="참고">참고 <a href="#%ec%b0%b8%ea%b3%a0" class="anchor">🔗</a></h3><p>의존성의 유무를 구분하기 위한 가장 간단한 방법은 import가 있는가 없는가를 생각하는 것이다. 모듈간 의존성을 관리하는 것은 gradle 기준으로 build.gradle 파일이다.</p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://nok3zy.github.io/tags/clean_architecture">Clean_Architecture</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
