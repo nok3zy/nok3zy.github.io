@@ -56,7 +56,7 @@
           ·
         </span>
         <span>
-          448 words
+          476 words
         </span>
         <span class="split">
           ·
@@ -87,6 +87,53 @@
 <p>간단하게 설명하자면, <code>API를 제공하는 모듈(presentation)</code>, <code>비지니스 로직를 제공하는 모듈(business)</code>, <code>DB에 접근하는 모듈(database)</code>로 하나의 프로젝트를 구성해야 한다. (클린 아키텍처에서는 헥사고날 아키텍처에 대해 이야기하고 있지만 간소화했다.)</p>
 <p>여기서 가장 중요한 로직은 business 모듈이다. 모든 비지니스 로직을 다루고 있어서 서비스를 위해 가장 중요하다. 따라서 변경이 최대한 일어나면 안되므로, 어느 모듈에도 의존성을 가지고 있으면 안된다. 프레임워크도 business에 존재하지 않는 것이 좋다.</p>
 <p>반면에, presentation이나 database는 business에 의존성을 가지고 있고 다른 프레임워크를 사용해도 좋다. (물론 적절히 사용하는 방향으로 가는 것이 가장 좋다.)</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 192 73"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 80,32 L 88,16' fill='none' stroke='currentColor'></path>
+<path d='M 104,16 L 112,32' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='8' y='52' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='16' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='24' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='32' y='52' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='40' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='48' y='52' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='56' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>B</text>
+<text text-anchor='middle' x='64' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='72' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='80' y='52' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='88' y='52' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='96' y='52' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='120' y='52' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='128' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='136' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='144' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='152' y='52' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='160' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='168' y='52' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='176' y='52' fill='currentColor' style='font-size:1em'>e</text>
+</g>
+
+    </svg>
+  
+</div>
 <h1 id="독립적인-개발">독립적인 개발 <a href="#%eb%8f%85%eb%a6%bd%ec%a0%81%ec%9d%b8-%ea%b0%9c%eb%b0%9c" class="anchor">🔗</a></h1><p>이렇게 모듈간 분리를 하면 일단 독립적인 개발이 가능해진다. business가 database나 presentation이 어떻게 동작하는 지 알 필요가 없어진다. 어떤 프레임워크를 사용하는 지, 어떤 로직이 이용되는 지는 관심 외의 일이다.</p>
 <blockquote>
 <p>f(input) = output</p>
