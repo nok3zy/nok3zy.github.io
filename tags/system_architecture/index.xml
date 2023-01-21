@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>System_Architecture on Nok</title>
+    <link>https://nok3zy.github.io/tags/system_architecture/</link>
+    <description>Recent content in System_Architecture on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Jan 2023 20:59:03 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/system_architecture/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>System Architecture</title>
+      <link>https://nok3zy.github.io/posts/system-architecture/</link>
+      <pubDate>Sat, 21 Jan 2023 20:59:03 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/system-architecture/</guid>
+      <description>한 프로젝트를 처음부터 시작하면서 선택을 해야하는 순간이 많았다. 종종 어떤 것을 선택하시겠어요?라는 선택지가 나에게 주어졌고 나는 어리둥절하며 고민을 해야 했다. 어떤 것이 좋은 거지? 무엇이 옳은 거지?
+그런 선택지들을 고르기 위해서는 시스템 아키텍처에 대한 이해가 필요했다. 그리고 전반적인 상황을 이해하기 위해서라도 공부를 해야만 했다.
+좋은 인프라는 무엇일까 🔗질문에 대한 답은 명백하다. 장애에 대해 Robust하고 확장이 쉽고 관측도 편하며 비용이 적게드는 것이 가장 좋은 인프라이다. 하지만 그런 인프라는 존재하지 않는다. 비용을 많이 투자해야 성능이 좋게 나오는 법이다.</description>
+    </item>
+    
+  </channel>
+</rss>

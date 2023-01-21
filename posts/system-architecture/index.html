@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>System Architecture | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="한 프로젝트를 처음부터 시작하면서 선택을 해야하는 순간이 많았다. 종종 어떤 것을 선택하시겠어요?라는 선택지가 나에게 주어졌고 나는 어리둥절하며 고민을 해야 했다. 어떤 것이 좋은 거지? 무엇이 옳은 거지?
+그런 선택지들을 고르기 위해서는 시스템 아키텍처에 대한 이해가 필요했다. 그리고 전반적인 상황을 이해하기 위해서라도 공부를 해야만 했다.
+좋은 인프라는 무엇일까 🔗질문에 대한 답은 명백하다. 장애에 대해 Robust하고 확장이 쉽고 관측도 편하며 비용이 적게드는 것이 가장 좋은 인프라이다. 하지만 그런 인프라는 존재하지 않는다. 비용을 많이 투자해야 성능이 좋게 나오는 법이다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">System Architecture</h1>
+
+    <div class="tip">
+        <time datetime="2023-01-21 20:59:03 &#43;0900 KST">Jan 21, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          360 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          2 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <p>한 프로젝트를 처음부터 시작하면서 선택을 해야하는 순간이 많았다. 종종 <code>어떤 것을 선택하시겠어요?</code>라는 선택지가 나에게 주어졌고 나는 어리둥절하며 고민을 해야 했다. 어떤 것이 좋은 거지? 무엇이 옳은 거지?</p>
+<p>그런 선택지들을 고르기 위해서는 시스템 아키텍처에 대한 이해가 필요했다. 그리고 전반적인 상황을 이해하기 위해서라도 공부를 해야만 했다.</p>
+<h1 id="좋은-인프라는-무엇일까">좋은 인프라는 무엇일까 <a href="#%ec%a2%8b%ec%9d%80-%ec%9d%b8%ed%94%84%eb%9d%bc%eb%8a%94-%eb%ac%b4%ec%97%87%ec%9d%bc%ea%b9%8c" class="anchor">🔗</a></h1><p>질문에 대한 답은 명백하다. 장애에 대해 Robust하고 확장이 쉽고 관측도 편하며 비용이 적게드는 것이 가장 좋은 인프라이다. 하지만 그런 인프라는 존재하지 않는다. 비용을 많이 투자해야 성능이 좋게 나오는 법이다. 하지만 상황에 따라 가장 좋은 선택지를 고를 수는 있어야 하지 않을까?</p>
+<h1 id="일반적인-구조">일반적인 구조 <a href="#%ec%9d%bc%eb%b0%98%ec%a0%81%ec%9d%b8-%ea%b5%ac%ec%a1%b0" class="anchor">🔗</a></h1><p>많은 사람들이 프로젝트를 시작할 때, 클라우드 서비스를 이용한다. 비용적인 측면, 성장 측면에서도 클라우드 환경이 온디맨드 방식보다 종합적으로 저렴하기 때문이다. 그리고 일반적으로 다음과 같은 형태로 서비스를 제공한다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 632 57"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 104,0' fill='none' stroke='currentColor'></path>
+<path d='M 176,0 L 304,0' fill='none' stroke='currentColor'></path>
+<path d='M 384,0 L 488,0' fill='none' stroke='currentColor'></path>
+<path d='M 568,0 L 608,0' fill='none' stroke='currentColor'></path>
+<path d='M 120,16 L 160,16' fill='none' stroke='currentColor'></path>
+<path d='M 320,16 L 368,16' fill='none' stroke='currentColor'></path>
+<path d='M 504,16 L 552,16' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 104,32' fill='none' stroke='currentColor'></path>
+<path d='M 176,32 L 304,32' fill='none' stroke='currentColor'></path>
+<path d='M 384,32 L 488,32' fill='none' stroke='currentColor'></path>
+<path d='M 568,32 L 608,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 104,0 L 104,32' fill='none' stroke='currentColor'></path>
+<path d='M 176,0 L 176,32' fill='none' stroke='currentColor'></path>
+<path d='M 304,0 L 304,32' fill='none' stroke='currentColor'></path>
+<path d='M 384,0 L 384,32' fill='none' stroke='currentColor'></path>
+<path d='M 488,0 L 488,32' fill='none' stroke='currentColor'></path>
+<path d='M 568,0 L 568,32' fill='none' stroke='currentColor'></path>
+<path d='M 608,0 L 608,32' fill='none' stroke='currentColor'></path>
+<polygon points='168.000000,16.000000 156.000000,10.400000 156.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 160.000000, 16.000000)'></polygon>
+<polygon points='376.000000,16.000000 364.000000,10.400000 364.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 368.000000, 16.000000)'></polygon>
+<polygon points='560.000000,16.000000 548.000000,10.400000 548.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 552.000000, 16.000000)'></polygon>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>/</text>
+<text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>W</text>
+<text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>L</text>
+<text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='208' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='216' y='20' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='232' y='20' fill='currentColor' style='font-size:1em'>B</text>
+<text text-anchor='middle' x='240' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='248' y='20' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='256' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='264' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='272' y='20' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='280' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='400' y='20' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='408' y='20' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='416' y='20' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='432' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='440' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='448' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='456' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='464' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='472' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='584' y='20' fill='currentColor' style='font-size:1em'>D</text>
+<text text-anchor='middle' x='592' y='20' fill='currentColor' style='font-size:1em'>B</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>유저가 요청을 보내면 로드 밸런서를 통해 앱서버로 요청을 분배한다. 서버는 들어온 요청에 맞게 동작을 하고 응답을 내려준다. Load Balancer와 App Server, DB는 모두 Capacity가 존재하는 서버다. 따라서 장애가 발생해도 서비스를 제대로 제공하기 위해서는 반드시 대비해야 한다.</p>
+<p>이 구조에서부터 시작해서 점차 서비스가 성장했을 때, 어떻게 많은 트래픽을 견딜 수 있을 지를 고민하고 대응해야한다. 그리고 그것이 점차 <code>시니어</code> 개발자한테 요구하는 바가 아닐까 싶다.</p>
+<h1 id="개선-방향">개선 방향 <a href="#%ea%b0%9c%ec%84%a0-%eb%b0%a9%ed%96%a5" class="anchor">🔗</a></h1><p>위의 시스템과 같이 구성을 했다면 조금씩 서비스가 발전해가면서 성능 역시 개선을 해야한다. 어플리케이션의 성능은 DB에 얼마나 호출하느냐에 따라 달라진다.</p>
+<p>디비에 접근하는 것을 일단 캐시로 완화해보자. 캐시는 갱신이 많이 일어나는 것에 붙이기 보다는 참조가 빈번하게 일어나는 것에 붙이는 것이 좋다. 그리고 캐시 메모리를 얼마나 할당할 것인지도 굉장히 중요하다. 너무 작으면 eviction이 일어나 캐시 성능이 떨어지고 너무 많으면 비용 문제가 생긴다. 그리고 캐시와 실제 데이터와의 일관성도 고려해야한다.</p>
+<p>정적 컨텐츠들은 CDN을 이용해보자. 지속적으로 변경이 일어나지 않는 데이터는 사용자들이 위치한 지역에 저장을 해두면 응답속도가 빨라질 수 있다. 물론 이 정적 컨텐츠들도 time-sensitive한 것들이 존재해서 캐시와 같이 고려할만한 것들이 존재한다.</p>
+<p>Database를 다중화해보자. master와 slave로 DB를 분리하고 쓰기 연산은 마스터로 읽기 연산은 slave를 통해서 수행한다. 대부분의 어플리케이션은 읽기 연산이 쓰기 연산보다 월등히 많다.</p>
+<p>참고로 로드밸런서는 다중화를 했을 때 트래픽을 공정하게 분배하지 않는다. 따라서 앱서버가 버틸 수 있는 제한을 넘어서 요청을 보낼 수도 있다. 로드밸런서가 n개이니 1/n으로 오겠지라는 생각으로 앱서버의 성능을 정하면 한순간에 터질 수도 있다.</p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://nok3zy.github.io/tags/system_architecture">System_Architecture</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>

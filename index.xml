@@ -6,7 +6,18 @@
     <description>Recent content on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Jan 2023 21:49:24 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Jan 2023 20:59:03 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>System Architecture</title>
+      <link>https://nok3zy.github.io/posts/system-architecture/</link>
+      <pubDate>Sat, 21 Jan 2023 20:59:03 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/system-architecture/</guid>
+      <description>한 프로젝트를 처음부터 시작하면서 선택을 해야하는 순간이 많았다. 종종 어떤 것을 선택하시겠어요?라는 선택지가 나에게 주어졌고 나는 어리둥절하며 고민을 해야 했다. 어떤 것이 좋은 거지? 무엇이 옳은 거지?
+그런 선택지들을 고르기 위해서는 시스템 아키텍처에 대한 이해가 필요했다. 그리고 전반적인 상황을 이해하기 위해서라도 공부를 해야만 했다.
+좋은 인프라는 무엇일까 🔗질문에 대한 답은 명백하다. 장애에 대해 Robust하고 확장이 쉽고 관측도 편하며 비용이 적게드는 것이 가장 좋은 인프라이다. 하지만 그런 인프라는 존재하지 않는다. 비용을 많이 투자해야 성능이 좋게 나오는 법이다.</description>
+    </item>
+    
     <item>
       <title>Clean Architecture</title>
       <link>https://nok3zy.github.io/posts/clean-architecture/</link>
@@ -26,7 +37,7 @@
       <guid>https://nok3zy.github.io/posts/2022%EB%85%84-%ED%9A%8C%EA%B3%A0/</guid>
       <description>1. 개발자가 되었다? 🔗취업을 준비하면서 과연 내가 개발을 할 수 있을까 하는 생각에서 벗어날 수 없었다. 무엇을 공부해야 하는지, 준비해야하는 지 알고 있었지만 항상 부족하다고 느꼈다.
 흔히들 말하는 코딩테스트와 프로젝트을 준비했지만 그렇게 경쟁력이 있다고 느껴지진 않았다.
-코딩테스트를 준비하기로 한 첫 달에 매일 3문제씩 풀어서 한달에 100문제를 풀었다. 그리고 매일 적어도 한문제씩 1년을 풀었다. 그렇게 풀다보니 어떤 코딩테스트를 봐도 통과할 정도는 되었다.
+코딩테스트를 준비하기로 한 첫번째 달에 매일 3문제씩 풀어서 한 달만에 100문제를 풀었다. 그리고 매일 적어도 한문제씩 1년을 풀었다. 그렇게 풀다보니 어떤 코딩테스트를 봐도 통과할 정도는 되었다.
 하지만 문제는 프로젝트였다. 프로젝트를 한다고 했는데 어떻게 준비해야할지 몰랐고 한다고 했던 것들은 정말 봐주기 어려울 정도였다.</description>
     </item>
     
