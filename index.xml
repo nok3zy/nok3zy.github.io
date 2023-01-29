@@ -6,7 +6,17 @@
     <description>Recent content on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Jan 2023 20:59:03 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Jan 2023 22:32:19 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring Test 개선</title>
+      <link>https://nok3zy.github.io/posts/spring-test-%EA%B0%9C%EC%84%A0/</link>
+      <pubDate>Sun, 22 Jan 2023 22:32:19 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/spring-test-%EA%B0%9C%EC%84%A0/</guid>
+      <description>기능을 개발하면서 제대로 동작하는 지는 테스트를 돌리면서 확인해야 한다. 단위테스트가 제대로 동작하는 것을 확인하고, 스테이징 환경에서도 의도된 대로 동작하는 것을 확인하고 깃에 푸시를 한다. 푸시를 하면 정해진 액션대로 CI를 기다려야 했다. 프로젝트에서 관리중인 코드가 굉장히 많기 때문에, 테스트 시간도 그에 비례해서 오래 걸릴 수 밖에 없었다. 그런데 이 시간이 생산성을 잡아먹는다고 생각이 들었다. 아 너무 오래걸리는데?
+이미 KTLO list에도 레거시 모듈 청산이 있었기 때문에, 레거시부터 정리해나가야 겠다고 생각했다. 그래 필요없는 코드를 제거해보자.</description>
+    </item>
+    
     <item>
       <title>System Architecture</title>
       <link>https://nok3zy.github.io/posts/system-architecture/</link>
@@ -24,9 +34,9 @@
       <pubDate>Sun, 15 Jan 2023 21:49:24 +0900</pubDate>
       
       <guid>https://nok3zy.github.io/posts/clean-architecture/</guid>
-      <description>클린 아키텍처가 뭐죠 🔗내가 클린 아키텍처를 고민하기 시작한 것은 내가 처음부터 빌딩하던 프로젝트 팀에서 다른 팀으로 이동하고 나서부터다. 팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. (물론 레거시도 많아서 더 복잡해보인 것은 비밀이 아니다.)
+      <description>클린 아키텍처가 뭐죠 🔗내가 클린 아키텍처를 고민해보기 시작한 것은 다른 팀으로 이동하고 나서부터다. 팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. (물론 레거시도 많아서 더 복잡해보였다.)
 &amp;ldquo;이 아키텍처는 클린 아키텍처에 기반해서 만들었어요.&amp;rdquo;
-그 말에 바로 클린 아키텍처부터 읽었다. 좋은 책이라고 들었었지만 정말 좋은 책이었다. 물론 한번에 모든 걸 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.</description>
+그 말에 바로 클린 아키텍처부터 읽었다. 이 구조를 이해하는 데 도움이 될 것이라고 생각했다. 그리고 좋은 책이라고 많이 들었기 때문에 고민없이 책을 읽게 되었다. 책에 적힌 모든 걸 한번에 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.</description>
     </item>
     
     <item>

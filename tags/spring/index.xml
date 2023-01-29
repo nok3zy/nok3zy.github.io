@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring on Nok</title>
+    <link>https://nok3zy.github.io/tags/spring/</link>
+    <description>Recent content in Spring on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Jan 2023 22:32:19 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring Test 개선</title>
+      <link>https://nok3zy.github.io/posts/spring-test-%EA%B0%9C%EC%84%A0/</link>
+      <pubDate>Sun, 22 Jan 2023 22:32:19 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/spring-test-%EA%B0%9C%EC%84%A0/</guid>
+      <description>기능을 개발하면서 제대로 동작하는 지는 테스트를 돌리면서 확인해야 한다. 단위테스트가 제대로 동작하는 것을 확인하고, 스테이징 환경에서도 의도된 대로 동작하는 것을 확인하고 깃에 푸시를 한다. 푸시를 하면 정해진 액션대로 CI를 기다려야 했다. 프로젝트에서 관리중인 코드가 굉장히 많기 때문에, 테스트 시간도 그에 비례해서 오래 걸릴 수 밖에 없었다. 그런데 이 시간이 생산성을 잡아먹는다고 생각이 들었다. 아 너무 오래걸리는데?
+이미 KTLO list에도 레거시 모듈 청산이 있었기 때문에, 레거시부터 정리해나가야 겠다고 생각했다. 그래 필요없는 코드를 제거해보자.</description>
+    </item>
+    
+  </channel>
+</rss>
