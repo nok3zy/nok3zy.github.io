@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>How to test | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="테스트 🔗프로젝트를 진행하다보면, 테스트를 굉장히 많이 작성하게 된다. 가끔은 비지니스 로직보다 테스트를 위한 코드가 더 많이 나오는 경우도 있다.
+과연 기능 개발에 드는 시간과 테스트에 드는 시간만큼 혹은 그 이상을 소비하는 것이 옳은 일일까? 개인적으로는 테스트에 투자하는 것이 개발자의 생산성을 향상시킨다고 생각한다.
+개인적으로 느낀 테스트의 장점은 다음과 같다.
+레거시 코드를 리팩토링하는 경우에 테스트만큼 좋은 방향성 지표가 없다. 효율이 좋지 않거나, 여러 이유로 코드를 변경하게 되는 경우 이만큼 마음을 안정시켜주는 것이 없다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">How to test</h1>
+
+    <div class="tip">
+        <time datetime="2023-03-26 14:40:02 &#43;0900 KST">Mar 26, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          766 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          4 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h1 id="테스트">테스트 <a href="#%ed%85%8c%ec%8a%a4%ed%8a%b8" class="anchor">🔗</a></h1><p>프로젝트를 진행하다보면, 테스트를 굉장히 많이 작성하게 된다. 가끔은 비지니스 로직보다 테스트를 위한 코드가 더 많이 나오는 경우도 있다.</p>
+<p>과연 기능 개발에 드는 시간과 테스트에 드는 시간만큼 혹은 그 이상을 소비하는 것이 옳은 일일까? 개인적으로는 <strong>테스트에 투자하는 것이 개발자의 생산성을 향상</strong>시킨다고 생각한다.</p>
+<p>개인적으로 느낀 테스트의 장점은 다음과 같다.</p>
+<ol>
+<li>레거시 코드를 리팩토링하는 경우에 테스트만큼 좋은 방향성 지표가 없다.
+효율이 좋지 않거나, 여러 이유로 코드를 변경하게 되는 경우 이만큼 마음을 안정시켜주는 것이 없다.</li>
+<li>거의 문서자료에 가깝다.
+잘 작성된 테스트는 거의 RFC 문서와 같다고 생각한다. 어떤 동작이 수행되고 결과물이 무엇인지 확인하기 좋다.</li>
+<li>리뷰가 편하다.
+(2)번과 비슷한 이유인데, 코드 리뷰를 하면서 일단 코드보다 테스트 코드를 읽으면 어떤 동작을 해야하는 코드인지 알 수 있다.</li>
+</ol>
+<p>이러한 이유로 테스트를 작성하는 것에 힘을 주고 있는데, 그만큼 어떻게 하면 더 잘 작성할 수 있을까 고민했다. 그리고 지금도 고민하고 있다.</p>
+<h2 id="스프링-테스트">스프링 테스트 <a href="#%ec%8a%a4%ed%94%84%eb%a7%81-%ed%85%8c%ec%8a%a4%ed%8a%b8" class="anchor">🔗</a></h2><p>스프링에서 테스트를 하다보면 스프링에서 제공하는 테스트를 자주 사용하게 된다. 아무래도 스프링을 이용해 개발을 하다보니 Bean을 주입해주는 것이 굉장히 편하기 때문에, 어노테이션을 이용해 테스트를 하게 된다. 가끔은 스프링의 기능이 전혀 필요없는 경우까지도 아무 생각없이 사용하게 될 정도다.</p>
+<p>하지만 그렇게 스프링의 기능을 써버리면 어느 순간부터는 굉장히 테스트 속도가 느려지게 된다. 등록된 빈을 가능한 재사용한다고 하지만 그래도 항상 사용하는 빈들이 동일하지도 않고, 조금씩 달라지기 때문에 그때마다 빈을 다시 만들게 된다.</p>
+<p>이런 경우, <a href="../spring-test-%ea%b0%9c%ec%84%a0">Spring Test 개선</a> 글에서 어떻게 개선했는지 작성했었다.</p>
+<p>따라서 가능한 부분은 스프링의 기능없이 테스트하는 것이 속도면에서 좋지 않을까? 그런데 스프링의 기능이 무조건적으로 요구되는 경우는 어떻게 해야할까?</p>
+<p>예를 들어,</p>
+<blockquote>
+<p>당신은 지금 Spring JPA를 이용해 개발하고 있다. 해당 코드(SampleRepository.kt)에 대해 테스트를 해야한다면?</p>
+<ul>
+<li>Mocking한다.</li>
+<li>주입받아서 사용한다.</li>
+<li>TestDouble을 만들어서 수행한다.</li>
+<li>JPA의 행동을 신뢰하고 테스트에서 제외한다.</li>
+</ul>
+</blockquote>
+<p>이 경우, 나는 아직 어떻게 하는 것이 좋을지 확신하지 못한다. 그래도 개인적인 생각을 공유하자면 다음과 같다.</p>
+<p><code>Mocking</code>은 썩 좋은 생각이 아닌 것 같다. Mocking을 할 거였으면, 차라리 테스트를 안하는 것이 낫다.</p>
+<p><code>주입</code>을 통해 테스트 하는 것은 좋다. 실제로 어떻게 동작하는지 결과를 확인할 수 있는 좋은 테스트라고 생각한다. 하지만 이 경우 점점 코드가 많아질 수록 느려질 것같다. (사실 코드가 많아질수록, 테스트가 오래걸리는 것은 당연하다.)</p>
+<p><code>TestDouble</code>은 JPA를 바로 구현하는 경우는 힘들다. JPA 인터페이스에는 꽤 많은 함수가 존재하는데 그걸 모두 구현해야한다.
+하지만 JPA Interface를 이용해서 만든 DomainRepository를 더블하는 경우라면 필요한 함수만을 테스트할 수 있다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 384 153"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 128,0' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 128,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,96 L 168,96' fill='none' stroke='currentColor'></path>
+<path d='M 256,96 L 368,96' fill='none' stroke='currentColor'></path>
+<path d='M 200,112 L 224,112' fill='none' stroke='currentColor'></path>
+<path d='M 0,128 L 168,128' fill='none' stroke='currentColor'></path>
+<path d='M 256,128 L 368,128' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,96 L 0,128' fill='none' stroke='currentColor'></path>
+<path d='M 64,48 L 64,80' fill='none' stroke='currentColor'></path>
+<path d='M 128,0 L 128,32' fill='none' stroke='currentColor'></path>
+<path d='M 168,96 L 168,128' fill='none' stroke='currentColor'></path>
+<path d='M 256,96 L 256,128' fill='none' stroke='currentColor'></path>
+<path d='M 368,96 L 368,128' fill='none' stroke='currentColor'></path>
+<path d='M 64,40 L 64,48' fill='none' stroke='currentColor'></path>
+<path d='M 64,80 L 64,88' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>J</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>P</text>
+<text text-anchor='middle' x='24' y='116' fill='currentColor' style='font-size:1em'>D</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='32' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='40' y='116' fill='currentColor' style='font-size:1em'>m</text>
+<text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>I</text>
+<text text-anchor='middle' x='48' y='116' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='56' y='116' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='64' y='116' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='72' y='116' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='80' y='68' fill='currentColor' style='font-size:1em'>U</text>
+<text text-anchor='middle' x='80' y='116' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>f</text>
+<text text-anchor='middle' x='88' y='68' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='88' y='116' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='96' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='96' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='104' y='116' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='112' y='116' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='120' y='116' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='128' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='136' y='116' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='144' y='116' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='256' y='84' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='264' y='84' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='272' y='84' fill='currentColor' style='font-size:1em'>j</text>
+<text text-anchor='middle' x='272' y='116' fill='currentColor' style='font-size:1em'>T</text>
+<text text-anchor='middle' x='280' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='280' y='116' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='288' y='84' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='288' y='116' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='296' y='84' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='296' y='116' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='312' y='84' fill='currentColor' style='font-size:1em'>F</text>
+<text text-anchor='middle' x='312' y='116' fill='currentColor' style='font-size:1em'>D</text>
+<text text-anchor='middle' x='320' y='84' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='320' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='328' y='84' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='328' y='116' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='336' y='116' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='344' y='84' fill='currentColor' style='font-size:1em'>T</text>
+<text text-anchor='middle' x='344' y='116' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='352' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='352' y='116' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='360' y='84' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='368' y='84' fill='currentColor' style='font-size:1em'>t</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>하지만 실제로 동작하는 것을 확인할 수는 없다.</p>
+<p><code>JPA 동작을 신뢰한다</code>는 잘 모르겠다. 무조건적으로 신뢰를 하는 것이 좋지는 않지만, 애초에 프로젝트에 사용하는 경우 이를 신뢰하고 있는 것이 아닐까 싶다. 그래도 동작에 대해서 확인은 해야한다는 입장이라서 해당 옵션은 썩 끌리지는 않는다.</p>
+<p>일단 이런 경우에 <code>구글 엔지니어는 이렇게 일한다</code>에서는 다음과 같이 말하고 있다.</p>
+<blockquote>
+<p>Test Double을 최대한 사용하지 않고, 가능하다면 대상 시스템이 의존하는 실제 구현 객체를 이용한다고 한다. 코드가 프로덕션 환경과 동일하게 동작해야 테스트 충실성이 높아지는데 실제 구현을 이용하면 자연스럽게 그렇게 된다. <br>
+구글에서도 과거에 모의객체 프레임워크를 과용했고, 그러다보니 테스트 결과와 실제 구현의 동작이 달라지는 일이 발생했다.</p>
+<p>단위테스트에 너무 많은 TestDouble을 사용하면, 통합테스트 혹은 수동으로 동작을 실행해야만 신뢰가 생긴다.</p>
+</blockquote>
+<p>그러면 <code>테스트 시간이 느려질텐데 괜찮을까?</code> 에 대한 해답으로는 다음과 같이 말한다.</p>
+<blockquote>
+<p>속도는 단위테스트에서 가장 중요한 특징 중의 하나이다. 일단 속도가 얼마정도 느려야 느린 건지 생각을 해봐라. 정답은 없다.  엔지니어가 느리다고 느끼는 것이 다르기 때문이다.<br>
+애매한 수준이라면 그냥 실제 객체를 이용하는 것이 옳다. 느려졌다고 생각이 들면 그때 테스트 대역을 사용해라. 그리고 테스트 병렬화도 실행시간을 줄이는 데 효과적이다.</p>
+</blockquote>
+<p>즉, 가능하면 프로덕션에서 사용하는 객체를 이용한 테스트를 수행하고 나중에 가서야 더블을 이용하거나 테스트 병렬화로 속도를 개선하는 작업을 하는 것이 선호한다는 것이다.</p>
+<h2 id="자바-코틀린-테스트">자바, 코틀린 테스트 <a href="#%ec%9e%90%eb%b0%94-%ec%bd%94%ed%8b%80%eb%a6%b0-%ed%85%8c%ec%8a%a4%ed%8a%b8" class="anchor">🔗</a></h2><p>자바, 코틀린 테스트는 스프링 같은 프레임워크 테스트보다는 생각하기 편한 것 같다.</p>
+<h3 id="bdd">BDD? <a href="#bdd" class="anchor">🔗</a></h3><p>나는 Java에서는 JUnit, Kotlin에서는 Kotest를 이용해 테스트를 작성했다. 일반적으로는 팀에서 작성하는 일반적인 모양(혹은 형식)대로 작성하지만 꼭 그렇게 해야할까 라는 생각을 하게 되었다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#75715e">//kotest BehaviorSpec
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>given(<span style="color:#e6db74">&#34;Input&#34;</span>){
+</span></span><span style="display:flex;"><span>    `when`(<span style="color:#e6db74">&#34;Function working&#34;</span>){
+</span></span><span style="display:flex;"><span>        then(<span style="color:#e6db74">&#34;Output&#34;</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// verify
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>위와 같이 kotest에서는 BehaviorSpec을 이용해서 작성했다. 하지만 모든 경우를 다음과 같이 수행해야 할까? 간단한 함수, input과 output이 명확한 경우라면 StringSpec을 이용해서 작성해도 되지않을까 ?</p>
+<p>결코 given-when-then 으로 서술하는 방식에 대해서 나무라는 것이 아니다. 로직이 복잡한 경우에는 당연히 이와 같은 방식이 이롭다고 생각한다.</p>
+<h3 id="fixture">Fixture <a href="#fixture" class="anchor">🔗</a></h3><p>테스트를 작성하다보면, 테스트에 필요한 객체를 생성하는 것에 지치는 경우가 많다. 하나의 테스트에 여러 객체가 필요하고, 객체에 소속된 필드들도 다른 객체인 경우도 존재하니 꽤나 피곤한 작업이다. Mocking을 한다해도 피곤한 것은 동일하다.</p>
+<p>이럴때 Fixture는 굉장히 유용하다. 실제로 kotlin으로 테스트를 작성할 때, kotlinFixture를 통해 객체를 생성했는데, 필요한 필드들만 설정하고 나머지는 랜덤으로 지정되는 것이 굉장히 편했다.</p>
+<p>객체의 Function에 대해서도 Mocking할 필요가 없어지니, 테스트 생산성을 올리는데는 이만한 것이 없었다.</p>
+<p>하지만 private 필드의 경우에는 이를 사용할 수가 없다. public인 경우에만 특정 값으로 지정이 가능하기 때문에 어떻게 사용해야할지 굉장히 고민을 하게 만든다.</p>
+<p>자바의 경우에는 어떻게 객체를 지정해야할지 잘 모르겠다.해당 객체를 위한 fixture을 작성해야할까? Mocking으로 해결해야할까?</p>
+
+    </div>
+
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
