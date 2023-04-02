@@ -67,55 +67,16 @@
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/kafka-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/'>Kafka 사용하기</a></h1>
+            <h1 class="title"><a href='/posts/2022%EB%85%84-%ED%9A%8C%EA%B3%A0/'>2022년 회고</a></h1>
             <div class ="date">
-                <time datetime="2023-04-02 19:18:02 &#43;0900 KST">Apr 2, 2023</time>  
+                <time datetime="2023-01-01 01:13:08 &#43;0900 KST">Jan 1, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">서비스 내에서 주기적으로 유저의 상황을 판단하기 위해, 유저 당 10초마다 GraphQL를 보내고 있었다. 이 과정에서, 쿼리 비용이 굉장히 많이 나왔고 이를 개선하기로 결정했다.
-어떻게 해결할 수 있을까 고민하다가, 기존에 활용되던 카프카 토픽에 이미 필요한 데이터가 쌓이는 데이터가 있는 것을 확인했다. 그래서 GraphQL로 보내던 요청을 이 카프카 토픽을 이용해서 해결하기로 결정했다.
-GraphQL이 Apollo Server를 거치면서 비용이 발생했고, 이 방식을 이용하면 RestApi를 통해서 쌓이는 이벤트이다보니 문제를 해결할 수 있어보였다.
-Consumer Group 🔗기존에 사용하던 토픽을 이용하기로 했고, 필요한 것은 기존 기능을 해치지 않는 것이었다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/how-to-test/'>How to test</a></h1>
-            <div class ="date">
-                <time datetime="2023-03-26 14:40:02 &#43;0900 KST">Mar 26, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">테스트 🔗프로젝트를 진행하다보면, 테스트를 굉장히 많이 작성하게 된다. 가끔은 비지니스 로직보다 테스트를 위한 코드가 더 많이 나오는 경우도 있다.
-과연 기능 개발에 드는 시간과 테스트에 드는 시간만큼 혹은 그 이상을 소비하는 것이 옳은 일일까? 개인적으로는 테스트에 투자하는 것이 개발자의 생산성을 향상시킨다고 생각한다.
-개인적으로 느낀 테스트의 장점은 다음과 같다.
-레거시 코드를 리팩토링하는 경우에 테스트만큼 좋은 방향성 지표가 없다. 효율이 좋지 않거나, 여러 이유로 코드를 변경하게 되는 경우 이만큼 마음을 안정시켜주는 것이 없다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/cicd-pipeline-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/'>CICD Pipeline 구축하기</a></h1>
-            <div class ="date">
-                <time datetime="2023-02-25 18:51:21 &#43;0900 KST">Feb 25, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">Harness를 CICD 파이프라인 구축하면서 있었던 일들을 정리해본다.
-CICD 파이프라인을 구축해보면서 고민했던 내용을 정리하는 느낌으로 작성하는 것이므로 하네스와 관련된 것은 최대한 제외했다.
-CICD가 무엇일까 파이프라인 구성하기 인프라 요구사항 파이프라인 만들기 CICD가 무엇일까 🔗CICD Pipeline을 새로 구축하면서,CICD라는 의미를 알고는 있지만 정확히 몰랐다. 그냥 뭐 테스트하고 자동으로 배포하고 그런것이 아닐까?
-CI(Continuous Integration)은 어플리케이션에 적용한 사항이 병합되었을 때, 자동으로 테스트하면서 잘 적용되었는지를 확인하는 작업을 자동화한 것을 의미한다. 간단히 말해서, 기존코드와 신규코드에 충돌이 있는지 확인하는 과정이라고 생각하면 될 것 같다.</div>
+              <div class="summary">1. 개발자가 되었다. 🔗취업을 준비하면서 과연 내가 개발을 할 수 있을까 하는 생각에서 벗어날 수 없었다. 무엇을 공부해야 하는지, 준비해야하는 지 알고 있었지만 항상 부족하다고 느꼈다. 흔히들 말하는 코딩테스트와 프로젝트을 준비했지만 그렇게 경쟁력이 있다고 느껴지진 않았다.
+코딩테스트를 준비하기로 한 첫번째 달에 매일 3문제씩 풀어서 한 달만에 100문제를 풀었다. 그리고 매일 적어도 한문제씩 1년을 풀었다. 그렇게 풀다보니 어떤 코딩테스트를 봐도 통과할 정도는 되었다.
+하지만 문제는 프로젝트였다. 프로젝트를 한다고 했는데 어떻게 준비해야할지 몰랐고 한다고 했던 것들은 정말 봐주기 어려울 정도였다.</div>
           
 
         </section>
@@ -124,13 +85,13 @@ CI(Continuous Integration)은 어플리케이션에 적용한 사항이 병합�
     
         <div class="pagination">
           
-          
-          
-              <span class="next">
+              <span class="prev">
                   <a href="/page/2/">
-                      Older posts <span class="arrow">→</span>
+                      <span class="arrow">←</span> Newer posts
                   </a>
-              </span>
+            </span>
+          
+          
           
         </div>
     
