@@ -64,44 +64,34 @@
 <section id="section">
     <h1 id="nok-software-engineer">Nok, Software Engineer. <a href="#nok-software-engineer" class="anchor">🔗</a></h1><ul>
 <li>좋은 코드가 있는 곳이 가장 배우기 좋은 환경이라고 생각합니다.</li>
-<li>테스트를 어떻게 작성해야 되는지를 고민하고 있습니다.</li>
-<li>DDD 와 테스트가 잘 적용된 코드를 보고 싶습니다.</li>
+<li>테스트를 어떻게 작성해야 할지를 항상 고민하고 있습니다.</li>
 </ul>
 <h1 id="contact">Contact <a href="#contact" class="anchor">🔗</a></h1><p>Email : <a href="mailto:nok3zy@gmail.com">nok3zy@gmail.com</a></p>
 <h1 id="work-experience">Work Experience <a href="#work-experience" class="anchor">🔗</a></h1><p>Class101 ( 22.02 ~ present )</p>
-<h1 id="projects">Projects <a href="#projects" class="anchor">🔗</a></h1><h3 id="creator-platform">Creator Platform <a href="#creator-platform" class="anchor">🔗</a></h3><blockquote>
-<p><strong>Tech Stack : <code>Java</code>, <code>Spring</code>, <code>MongoDB</code>, <code>GraphQL</code></strong><br>
-<strong>(2023.01 ~ present)</strong></p>
-<ul>
-<li>Typescript, React를 사용해 Admin Page의 간단한 UI 컴포넌트를 만들고 백엔드 로직을 작성함.</li>
-<li>담당 서비스의 비용을 줄이기 위해서, 인프라팀과 적정 리소스값을 측정하고 k6를 이용한 스트레스 테스트로 rightsizing을 수행함.</li>
-</ul>
+<h1 id="projects">Projects <a href="#projects" class="anchor">🔗</a></h1><h3 id="dynamic-creative">Dynamic Creative <a href="#dynamic-creative" class="anchor">🔗</a></h3><blockquote>
+<p><strong>Tech Stack : <code>Java</code>, <code>Spring</code>, <code>MongoDB</code></strong><br>
+<strong>(2023.04 ~ present)</strong></p>
 </blockquote>
+<ul>
+<li>매 시간마다 업데이트가 되는 상품들을 추천 모델에 반영해달라는 요구사항이 존재함. 상품의 정보가 변경되는 유즈케이스가 많았기 때문에 디비를 직접 확인하는 것이 좋아보임. Mongo ChangeStream을 통해 특정 기준으로부터 업데이트가 된 정보들을 확인할 수 있었음. 이 작업이 로드가 걸릴 것을 고민해 비동기로 수행하도록 함. 스프링 스케쥴링을 이용하여 S3로 업로드하는 자동화 로직을 작성함. <a href="../posts/upload-updated-catalog-every-n-hours">LINK</a></li>
+<li>DB에서 국제화된 데이터를 받아와야 하는데 키값이 다른 경우가 있어 자바 객체로 표현하는데 어려움이 있었음. G11n 객체를 생성하고  mongoCustomConverter를 통해 Document에서 G11n 객체로 convert하는 로직을 추가해줘 해결함. <a href="../posts/mongo-custom-converter">LINK</a></li>
+</ul>
 <h3 id="cicd-pipeline-migration">CI/CD Pipeline Migration <a href="#cicd-pipeline-migration" class="anchor">🔗</a></h3><blockquote>
 <p><strong>Tech Stack : <code>k8s</code>, <code>helm</code></strong><br>
 <strong>(2022.12 ~ 2023.03)</strong></p>
-<ul>
-<li>기존에 사용하던 Drone에서 Harness로 CI/CD 솔루션 이전함. 기존에 실제 서비스와 CI환경이 분리가 되어있지 않아, 노드셀렉터와 테인트를 이용해 분리함. 그리고 CI 노드에 파이프라인에 필요한 권한을 제공하기 위해 serviceAccount에 role을 추가함.</li>
-<li>yarn.lock을 기준으로 node_modules를 캐시해 install_node 소요시간을 줄여 속도를 12% 개선함.</li>
-</ul>
 </blockquote>
+<ul>
+<li>매번 수행하던 install node_modules를 yarn.lock을 기준으로 캐시해 install_node 소요시간을 줄여 파이프라인 빌드 속도를 12% 개선함.</li>
+<li>기존에 사용하던 Drone에서 Harness로 CI/CD 솔루션 이전함. 기존에 실제 서비스와 CI환경이 분리가 되어있지 않아, 노드셀렉터와 테인트를 이용해 분리함. 그리고 CI 노드에 파이프라인에 필요한 권한을 제공하기 위해 serviceAccount에 role을 추가함. <a href="../posts/cicd-pipeline-migration/">LINK</a></li>
+</ul>
 <h3 id="rosseta">Rosseta <a href="#rosseta" class="anchor">🔗</a></h3><blockquote>
 <p><strong>Tech Stack : <code>Kotlin</code>, <code>Java</code>, <code>Spring</code>, <code>mongoDB</code>, <code>GraphQL</code></strong><br>
 <strong>(2022.06 ~ 2022.11)</strong></p>
-<ul>
-<li>특정 문자(&lt;)와 파일 포맷(vtt)이 AWS Translate 성능을 저하시키는 문제가 발생함. 성능 저하 요소를 번역 전후에 처리하는 로직을  stringBuilder를 이용해 성능을 개선함.</li>
-<li>테스트의 생산성이 낮아 모듈 단위로 테스트 리팩토링을 진행함. 개별 테스트 마다 Bean이 생성되는 것이 문제라고 판단해 <code>@SpringBootTest</code>와 <code>@MockBean</code>을 최대한 제거하여 속도를 28% 개선함.</li>
-<li>시청시간을 기록하는 GraphQL이 Apollo Gateway을 지나면서 비용 문제가 발생함. 기존에 Kafka Topic으로 기록하던 정산 데이터로 시청시간을 트랙킹할 수 있다고 판단함. 정산 데이터에 영향이 가지 않도록 Consumer Group을 분리해서 Topic을 읽게 하고 스트레스 테스트로 파티션 개수를 적절히 배치해 해결함.</li>
-</ul>
 </blockquote>
-<h3 id="cuve">Cuve <a href="#cuve" class="anchor">🔗</a></h3><blockquote>
-<p><strong>Tech Stack : <code>Java</code>, <code>Spring</code>, <code>mysql</code>, <code>Rest</code></strong><br>
-<strong>(2022.02 ~ 2022.06)</strong></p>
 <ul>
-<li>프로젝트 빌딩 단계에 참여해 비즈니스에서 요구한 사항들을 반영한 전반적인 백엔드 로직을 작성함.</li>
-<li>사용자와 관리자의 권한을 분리하는 것이 요구됨. Spring Security JWT와 DecisionVoter를 이용해 인증, 인가 기능을 개발함.</li>
+<li>테스트의 생산성이 낮아 모듈 단위로 테스트 리팩토링을 진행함. 개별 테스트 마다 Bean이 생성되는 것이 문제라고 판단해 <code>@SpringBootTest</code>와 <code>@MockBean</code>을 최대한 제거하여 속도를 28% 개선함. <a href="../posts/improve-spring-test/">LINK</a></li>
+<li>시청시간을 기록하는 GraphQL이 Apollo Gateway을 지나면서 비용 문제가 발생함. 기존에 Kafka Topic으로 기록하던 정산 데이터로 시청시간을 트랙킹할 수 있다고 판단함. 정산 데이터에 영향이 가지 않도록 Consumer Group을 분리해서 Topic을 읽게 하고 스트레스 테스트로 파티션 개수를 적절히 배치해 해결함. <a href="../posts/lets-use-kafka/">LINK</a></li>
 </ul>
-</blockquote>
 
 
     

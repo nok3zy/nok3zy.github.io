@@ -67,16 +67,16 @@
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/mongo-custom-converter/'>Mongo Custom Converter</a></h1>
+            <h1 class="title"><a href='/posts/system-architecture/'>System Architecture</a></h1>
             <div class ="date">
-                <time datetime="2023-06-13 17:36:18 &#43;0900 KST">Jun 13, 2023</time>  
+                <time datetime="2023-01-21 20:59:03 &#43;0900 KST">Jan 21, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">Dynamic Creative 에서 상품 데이터를 Catalog로 만들면서, Document에 존재하는 국제화 데이터를 가공할 필요가 있었다. 상품의 Title이나 Description 등의 정보들이 있었고, 또한 해당 국가에서 접근이 가능한 상품인지 아닌지 등을 따져야하는 경우가 있었다.
-여기서 생긴 문제는 필요한 데이터의 키값이 다르게 설정되어 있었다는 것이다.
-Title { KR : &#34;커피&#34;, US : &#34;Coffee&#34;, JP : &#34;コーヒー&#34; } Description { ko : &#34;안녕하세요&#34;, en : &#34;Hello&#34;, ja : &#34;こんにちは&#34; } 이런 식으로 각 국가마다 노출해줄 데이터의 키값이 달랐다.</div>
+              <div class="summary">한 프로젝트를 처음부터 시작하면서 선택을 해야하는 순간이 많았다. 종종 어떤 것을 선택하시겠어요?라는 선택지가 나에게 주어졌고 나는 어리둥절하며 고민을 해야 했다. 어떤 것이 좋은 거지? 무엇이 옳은 거지?
+그런 선택지들을 고르기 위해서는 시스템 아키텍처에 대한 이해가 필요했다. 그리고 전반적인 상황을 이해하기 위해서라도 공부를 해야만 했다.
+좋은 인프라는 무엇일까 🔗질문에 대한 답은 명백하다. 장애에 대해 Robust하고 확장이 쉽고 관측도 편하며 비용이 적게드는 것이 가장 좋은 인프라이다. 하지만 그런 인프라는 존재하지 않는다. 비용을 많이 투자해야 성능이 좋게 나오는 법이다.</div>
           
 
         </section>
@@ -85,16 +85,16 @@ Title { KR : &#34;커피&#34;, US : &#34;Coffee&#34;, JP : &#34;コーヒー&#34
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/upload-updated-catalog-every-n-hours/'>Upload updated catalog every N hours</a></h1>
+            <h1 class="title"><a href='/posts/clean-architecture/'>Clean Architecture</a></h1>
             <div class ="date">
-                <time datetime="2023-05-26 16:32:39 &#43;0900 KST">May 26, 2023</time>  
+                <time datetime="2023-01-15 21:49:24 &#43;0900 KST">Jan 15, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">Dynamic Creative 프로젝트를 진행하면서, 업데이트가 되는 상품 정보를 모델에 적용시킬 수 있도록 해당 정보들을 올려달라는 요구사항을 받았다. 상품 정보는 업데이트가 정말 많이 일어나는 collection이었다. 그래서 번경이 일어나는 곳에서 이벤트를 감지해서 하기는 무리가 있었고 더군다나 여러 MSA에서 사용하고 있었기 때문에 더 말이 되지 않았다.
-ChangeStream 🔗결국 선택한 방법은 Mongo의 ChangeStream을 이용하는 것이었다. 그리고 Spring MongoTemplate을 이용해서, 아래와 같이 ChangeStream에 접근할 수 있었다.
-final MongoCollection&lt;Document&gt; collection = mongoTemplate.getCollection(COLLECTION_NAME); final ChangeStreamIterable&lt;Document&gt; changeStream = collection.</div>
+              <div class="summary">클린 아키텍처가 뭐죠 🔗내가 클린 아키텍처를 고민해보기 시작한 것은 다른 팀으로 이동하고 나서부터다. 팀을 이동하면서 앞으로 내가 할 프로젝트의 첫 인상은 개발 언어도, 도메인도 다르고 멀티 모듈로 둘러쌓여 굉장히 복잡해 보였다. (물론 레거시도 많아서 더 복잡해보였다.)
+“이 아키텍처는 클린 아키텍처에 기반해서 만들었어요.”
+그 말에 바로 클린 아키텍처부터 읽었다. 이 구조를 이해하는 데 도움이 될 것이라고 생각했다. 그리고 좋은 책이라고 많이 들었기 때문에 고민없이 책을 읽게 되었다. 책에 적힌 모든 걸 한번에 이해할 수는 없었지만, 어떤 것을 말하고 싶은지는 이해를 할 수 있었다.</div>
           
 
         </section>
@@ -103,16 +103,16 @@ final MongoCollection&lt;Document&gt; collection = mongoTemplate.getCollection(C
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/helm-release/'>Helm Release</a></h1>
+            <h1 class="title"><a href='/posts/2022%EB%85%84-%ED%9A%8C%EA%B3%A0/'>2022년 회고</a></h1>
             <div class ="date">
-                <time datetime="2023-05-18 18:34:16 &#43;0900 KST">May 18, 2023</time>  
+                <time datetime="2023-01-01 01:13:08 &#43;0900 KST">Jan 1, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">하나의 서비스를 위해 k8s의 여러 자원들이 존재한다. 예를 들어, service, serviceAccount, ingress 등이 있다. 그리고 이런 자원들을 정리하는 것이 helm release이다. helm의 release는 여러 쿠버네티스 상의 자원들을 관리해주며, Release를 uninstall을 하면 위 자원들도 같이 제거된다. 따라서 기존에 존재하는 모든 녀석들을 이와 같이 제거해주고 Release를 만들때 다 같이 만든다.
-kubectl을 이용해서 배포하는 서비스의 경우, release가 관리가 되지 않아서 필요가 없어지는 경우에는 매번 손으로 제거해줘야 하는 귀찮음이 존재했다.
-그래서 helm upgrade로 배포할 수 있도록 변경했더니 resource conflict 오류가 발생했다.</div>
+              <div class="summary">1. 개발자가 되었다. 🔗취업을 준비하면서 과연 내가 개발을 할 수 있을까 하는 생각에서 벗어날 수 없었다. 무엇을 공부해야 하는지, 준비해야하는 지 알고 있었지만 항상 부족하다고 느꼈다. 흔히들 말하는 코딩테스트와 프로젝트을 준비했지만 그렇게 경쟁력이 있다고 느껴지진 않았다.
+코딩테스트를 준비하기로 한 첫번째 달에 매일 3문제씩 풀어서 한 달만에 100문제를 풀었다. 그리고 매일 적어도 한문제씩 1년을 풀었다. 그렇게 풀다보니 어떤 코딩테스트를 봐도 통과할 정도는 되었다.
+하지만 문제는 프로젝트였다. 프로젝트를 한다고 했는데 어떻게 준비해야할지 몰랐고 한다고 했던 것들은 정말 봐주기 어려울 정도였다.</div>
           
 
         </section>
@@ -121,13 +121,13 @@ kubectl을 이용해서 배포하는 서비스의 경우, release가 관리가 �
     
         <div class="pagination">
           
-          
-          
-              <span class="next">
-                  <a href="/page/2/">
-                      Older posts <span class="arrow">→</span>
+              <span class="prev">
+                  <a href="/page/3/">
+                      <span class="arrow">←</span> Newer posts
                   </a>
-              </span>
+            </span>
+          
+          
           
         </div>
     

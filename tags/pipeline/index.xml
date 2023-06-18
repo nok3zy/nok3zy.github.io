@@ -18,11 +18,11 @@ Static file 🔗빌드마다 다른 아이디값이 문제가 되는 이유는 �
     </item>
     
     <item>
-      <title>CICD Pipeline 구축하기</title>
-      <link>https://nok3zy.github.io/posts/cicd-pipeline-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/</link>
+      <title>CICD Pipeline Migration</title>
+      <link>https://nok3zy.github.io/posts/cicd-pipeline-migration/</link>
       <pubDate>Sat, 25 Feb 2023 18:51:21 +0900</pubDate>
       
-      <guid>https://nok3zy.github.io/posts/cicd-pipeline-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/</guid>
+      <guid>https://nok3zy.github.io/posts/cicd-pipeline-migration/</guid>
       <description>Harness를 CICD 파이프라인 구축하면서 있었던 일들을 정리해본다.
 CICD 파이프라인을 구축해보면서 고민했던 내용을 정리하는 느낌으로 작성하는 것이므로 하네스와 관련된 것은 최대한 제외했다.
 CICD가 무엇일까 파이프라인 구성하기 인프라 요구사항 파이프라인 만들기 CICD가 무엇일까 🔗CICD Pipeline을 새로 구축하면서,CICD라는 의미를 알고는 있지만 정확히 몰랐다. 그냥 뭐 테스트하고 자동으로 배포하고 그런것이 아닐까?

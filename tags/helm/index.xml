@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>helm on Nok</title>
+    <link>https://nok3zy.github.io/tags/helm/</link>
+    <description>Recent content in helm on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 May 2023 18:34:16 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/helm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Helm Release</title>
+      <link>https://nok3zy.github.io/posts/helm-release/</link>
+      <pubDate>Thu, 18 May 2023 18:34:16 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/helm-release/</guid>
+      <description>하나의 서비스를 위해 k8s의 여러 자원들이 존재한다. 예를 들어, service, serviceAccount, ingress 등이 있다. 그리고 이런 자원들을 정리하는 것이 helm release이다. helm의 release는 여러 쿠버네티스 상의 자원들을 관리해주며, Release를 uninstall을 하면 위 자원들도 같이 제거된다. 따라서 기존에 존재하는 모든 녀석들을 이와 같이 제거해주고 Release를 만들때 다 같이 만든다.
+kubectl을 이용해서 배포하는 서비스의 경우, release가 관리가 되지 않아서 필요가 없어지는 경우에는 매번 손으로 제거해줘야 하는 귀찮음이 존재했다.
+그래서 helm upgrade로 배포할 수 있도록 변경했더니 resource conflict 오류가 발생했다.</description>
+    </item>
+    
+  </channel>
+</rss>
