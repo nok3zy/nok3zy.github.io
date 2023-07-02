@@ -6,11 +6,11 @@
     <description>Recent content on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Jul 2023 19:44:37 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Jun 2023 19:44:37 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MSA Observility</title>
       <link>https://nok3zy.github.io/posts/msa-observility/</link>
-      <pubDate>Sun, 02 Jul 2023 19:44:37 +0900</pubDate>
+      <pubDate>Wed, 28 Jun 2023 19:44:37 +0900</pubDate>
       
       <guid>https://nok3zy.github.io/posts/msa-observility/</guid>
       <description>시스템의 출력으로 부터 상태를 이해할 수 있는 능력을 Observility 라고 한다. 다시 말하자면, 로그나 실시간으로 수집되는 모니터링 지표같은 출력을 통해 시스템의 상태를 이해할 수 있는 능력을 의미한다.
