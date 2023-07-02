@@ -6,7 +6,19 @@
     <description>Recent content on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jun 2023 17:36:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Jul 2023 19:44:37 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MSA Observility</title>
+      <link>https://nok3zy.github.io/posts/msa-observility/</link>
+      <pubDate>Sun, 02 Jul 2023 19:44:37 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/msa-observility/</guid>
+      <description>시스템의 출력으로 부터 상태를 이해할 수 있는 능력을 Observility 라고 한다. 다시 말하자면, 로그나 실시간으로 수집되는 모니터링 지표같은 출력을 통해 시스템의 상태를 이해할 수 있는 능력을 의미한다.
+이 글은 토스 SLASH23을 보고 정리한 내용입니다.
+MSA 환경에서의 모니터링 🔗클라우드, MSA 아키텍처 등은 기존의 IT 시스템이 가지고 있던 문제들을 개선하며, 민첩한 개발을 할 수 있게 한다. 이 기술들은 기술의 기반환경을 가상화, 추상화를 통해 기존의 문제들을 해결하는데 도움을 주고 있다.
+과연 클라우드와 MSA 아키텍처가 장점만 있는 것일까?</description>
+    </item>
+    
     <item>
       <title>Mongo Custom Converter</title>
       <link>https://nok3zy.github.io/posts/mongo-custom-converter/</link>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>MSA Observility | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="시스템의 출력으로 부터 상태를 이해할 수 있는 능력을 Observility 라고 한다. 다시 말하자면, 로그나 실시간으로 수집되는 모니터링 지표같은 출력을 통해 시스템의 상태를 이해할 수 있는 능력을 의미한다.
+이 글은 토스 SLASH23을 보고 정리한 내용입니다.
+MSA 환경에서의 모니터링 🔗클라우드, MSA 아키텍처 등은 기존의 IT 시스템이 가지고 있던 문제들을 개선하며, 민첩한 개발을 할 수 있게 한다. 이 기술들은 기술의 기반환경을 가상화, 추상화를 통해 기존의 문제들을 해결하는데 도움을 주고 있다.
+과연 클라우드와 MSA 아키텍처가 장점만 있는 것일까?">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">MSA Observility</h1>
+
+    <div class="tip">
+        <time datetime="2023-07-02 19:44:37 &#43;0900 KST">Jul 2, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          1076 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          6 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <p>시스템의 출력으로 부터 상태를 이해할 수 있는 능력을 <code>Observility</code> 라고 한다.
+다시 말하자면, 로그나 실시간으로 수집되는 모니터링 지표같은 출력을 통해 시스템의 상태를 이해할 수 있는 능력을 의미한다.</p>
+<p>이 글은 <a href="https://www.youtube.com/watch?v=Ifz0LsfAG94" target="_blank" rel="noopener">토스 SLASH23</a>을 보고 정리한 내용입니다.</p>
+<hr>
+<h2 id="msa-환경에서의-모니터링">MSA 환경에서의 모니터링 <a href="#msa-%ed%99%98%ea%b2%bd%ec%97%90%ec%84%9c%ec%9d%98-%eb%aa%a8%eb%8b%88%ed%84%b0%eb%a7%81" class="anchor">🔗</a></h2><p>클라우드, MSA 아키텍처 등은 기존의 IT 시스템이 가지고 있던 문제들을 개선하며, 민첩한 개발을 할 수 있게 한다. 이 기술들은 기술의 기반환경을 가상화, 추상화를 통해 기존의 문제들을 해결하는데 도움을 주고 있다.</p>
+<p>과연 클라우드와 MSA 아키텍처가 장점만 있는 것일까? 기술의 기반환경이 가상화, 추상화되었다는 것은 문제 발생시 추적하기가 어렵다는 것을 의미한다. MSA의 높은 Cardinality를 가진 지표들은 기존 일반적인 모니터링 시스템으로는 모니터링이 힘들다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 280 105"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 96,24 L 96,40' fill='none' stroke='currentColor'></path>
+<path d='M 96,56 L 96,72' fill='none' stroke='currentColor'></path>
+<path d='M 132,40 L 140,24' fill='none' stroke='currentColor'></path>
+<path d='M 60,24 L 68,40' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='8' y='52' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='16' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='24' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='32' y='52' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='40' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='48' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='64' y='52' fill='currentColor' style='font-size:1em'>-</text>
+<text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='80' y='52' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='80' y='84' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='88' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='88' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='96' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='96' y='84' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='104' y='52' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='104' y='84' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='112' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='112' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='120' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='120' y='84' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='136' y='52' fill='currentColor' style='font-size:1em'>-</text>
+<text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='160' y='52' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='168' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='176' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='184' y='52' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='192' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='200' y='52' fill='currentColor' style='font-size:1em'>r</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>그래서 이런 MSA 환경에서는 로그의 중요성이 대두된다.</p>
+<p>우리가 작성한 로직에 문제가 없다고 하더라도, 외부 연계 시스템에서 응답을 잘못 반환하거나 인프라 레벨의 문제가 발생해 의도대로 동작하지 않을 수 있다. 언제든지 에러가 발생할 수 있는 상황인 것이다.</p>
+<p>요청이 분산 처리되면서 우리 시스템이 어떻게 동작하는지 확인하는 것이 더 어려워졌다. 그리고 이는 로그를 &ldquo;잘&rdquo; 남기지 않아서 생긴 문제이다.</p>
+<p>&ldquo;로그를 잘 남긴다&rdquo; 라는 것은 무엇일까.</p>
+<h2 id="좋은-로그란-">좋은 로그란 ? <a href="#%ec%a2%8b%ec%9d%80-%eb%a1%9c%ea%b7%b8%eb%9e%80-" class="anchor">🔗</a></h2><p>여기 요청 시작시점과 종료 시점에 로그를 남기는 간단한 API가 있다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><pre tabindex="0"><code class="language-log" data-lang="log">23-01-01 02:11:23.023 [thread - 1] [SampleController]  요청시작
+23-01-01 02:12:01.012 [thread - 1] [SampleController]  요청종료
+</code></pre><p>이렇게 하나만 있었을 때는 아무 문제가 없어보인다. 하지만 api가 늘어나면서 이와 같은 로그는 작성한 의미가 없어진다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function1</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function2</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><pre tabindex="0"><code class="language-log" data-lang="log">23-01-01 02:11:23.023 [thread - 1] com.example.sampleController : 요청시작
+23-01-01 02:11:23.023 [thread - 2] com.example.sampleController : 요청시작
+23-01-01 02:12:01.012 [thread - 1] com.example.sampleController : 요청종료
+23-01-01 02:12:01.012 [thread - 2] com.example.sampleController : 요청종료
+</code></pre><p>두 개의 API는 쓰레드를 제외한 모든 정보가 동일해 어떤 함수가 동작했는지 확인할 수 없다.</p>
+<p>따라서 로그를 남길때 API 정보를 남기는 것이 필요해보인다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/doSomething&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function1</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething 요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething 요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>이렇게 하면 어떤 api가 호출되었는지 알 수 있다.</p>
+<p>그리고 문뜩 사용자별 호출 횟수가 궁금해진다. 이 로그에서는 사용자별 요청을 확인할 수 없다. 그렇다면 사용자 정보 역시 로그에 추가하면 되지 않을까?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/doSomething&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function1</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething  userID : {} 요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething userID: {} 요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><strong>이러한 맥락정보를 추가하는 것으로 요청이 처리된 당시의 시스템 상황을 이해하는데 도움이 된다.</strong></p>
+<p>그런데 간헐적으로 API가 실패한다는 이야기가 들려온다. 그래서 이 원인을 분석하고자 로그를 남기려고한다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/doSomething&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function1</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething  userID : {} 요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>      log<span style="color:#f92672">.</span><span style="color:#a6e22e">error</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;에러 발생&#34;</span><span style="color:#f92672">,</span>e<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething userID: {} 요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>예외를 잡아 로그를 남기도록 하자. 이렇게 하면 stacktrace가 로그로 잘 남아서 원인 분석에 사용할 수 있을 것 같다.</p>
+<p>하지만 stacktrace가 많이 발생한다면 어느 요청에 발생된 에러인지 확인하기가 어렵다.</p>
+<p>예외가 발생했을 때를 대비해 요청당 식별자를 하나 발급해두고 모든 로그에 식별자를 남긴다면 상황을 이해하는데 도움이 된다.</p>
+<p>traceId라는 식별자를 발급하고 서버별로 필요한 맥락정보들을 넣어보자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/doSomething&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">function1</span><span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>   String traceId <span style="color:#f92672">=</span> createTraceId<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething traceID : UserID 요청시작&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//do something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+</span></span><span style="display:flex;"><span>      log<span style="color:#f92672">.</span><span style="color:#a6e22e">error</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;에러 발생&#34;</span><span style="color:#f92672">,</span>traceId<span style="color:#f92672">,</span> e<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;API /api/v1/doSomething traceID : userID 요청종료&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>API 호출 당 TraceId를 호출하고 모든 로그에 일관되게 기록되도록 구성한다면, 요청이 처리된 당시의 시스템 상황을 이해하는데 도움이 된다.</p>
+<p>유저별로 경험하는 API 별 평균 응답시간이 궁금하다. API와 사용자 ID를 로그에 남겨두었으니 쉽게 추출할 수 있을 것 같다.</p>
+<p>그런데 로그를 파싱하려고 해보니 API, userId, traceId 를 기록하는 순서에 일관성이 없다. 로그를 정형화하는 것이 필요해보인다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogEntity</span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// TraceId, userId, API, message과 같은 맥락 정보를 필드로 가짐.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>그래서 로그를  클래스로 만들어 관리하기로 했다. 그리고 JSON 형식을 내보낸다면 보기 좋은 로그가 완성될 것 같다.</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">23.00.00 01:23:44.231 --- [thread-01] com.example.sampleController : {userId: Ad234 , ... , api: &#34;/api/v1/doSomething&#34;, message: &#34;요청처리 시작&#34;}
+</code></pre><p>로그가 JSON 형식으로 정형화되어 저장되므로 로그에 추가되는 항목이나 기록되는 항목의 순서가 변경되더라도 걱정하지 않아도 될 것 같다.  이렇게 만들면 외구 도구와 연계하여 로그 검색 시스템을 만드는 것도 용이하게 한다.</p>
+<p>로그가 정형화되어 저장되고 같은 맥락의 로그가 동일한 TraceId로 연결되어 기록되고 검색될 수 있다면, 요청이 처리된 당시의 시스템 상황을 알기가 좋다.</p>
+<p>정리하자면, 좋은 로그란 상황을 이해할 수  있게 맥락 정보들을 잘 나열해 놓은 것이라고 할 수 있지 않을까.</p>
+<h2 id="msa에서-좋은-로그-남기기">MSA에서 좋은 로그 남기기 <a href="#msa%ec%97%90%ec%84%9c-%ec%a2%8b%ec%9d%80-%eb%a1%9c%ea%b7%b8-%eb%82%a8%ea%b8%b0%ea%b8%b0" class="anchor">🔗</a></h2><p>사용자가 APP을 통해 거래내역을 조회한다면 어떻게 될까.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 424 217"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 272,0 L 384,0' fill='none' stroke='currentColor'></path>
+<path d='M 272,32 L 384,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,80 L 72,80' fill='none' stroke='currentColor'></path>
+<path d='M 168,80 L 224,80' fill='none' stroke='currentColor'></path>
+<path d='M 88,96 L 152,96' fill='none' stroke='currentColor'></path>
+<path d='M 0,112 L 72,112' fill='none' stroke='currentColor'></path>
+<path d='M 168,112 L 224,112' fill='none' stroke='currentColor'></path>
+<path d='M 264,160 L 384,160' fill='none' stroke='currentColor'></path>
+<path d='M 264,192 L 384,192' fill='none' stroke='currentColor'></path>
+<path d='M 0,80 L 0,112' fill='none' stroke='currentColor'></path>
+<path d='M 72,80 L 72,112' fill='none' stroke='currentColor'></path>
+<path d='M 168,80 L 168,112' fill='none' stroke='currentColor'></path>
+<path d='M 224,80 L 224,112' fill='none' stroke='currentColor'></path>
+<path d='M 264,160 L 264,192' fill='none' stroke='currentColor'></path>
+<path d='M 272,0 L 272,32' fill='none' stroke='currentColor'></path>
+<path d='M 384,0 L 384,32' fill='none' stroke='currentColor'></path>
+<path d='M 384,160 L 384,192' fill='none' stroke='currentColor'></path>
+<path d='M 248,80 L 272,32' fill='none' stroke='currentColor'></path>
+<path d='M 248,112 L 264,144' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='16' y='100' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='24' y='100' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='32' y='100' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='40' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='48' y='100' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='56' y='100' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='88' y='68' fill='currentColor' style='font-size:1em'>1</text>
+<text text-anchor='middle' x='104' y='68' fill='currentColor' style='font-size:1em'>G</text>
+<text text-anchor='middle' x='112' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='68' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='136' y='68' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='144' y='68' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='152' y='68' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='160' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='168' y='68' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='176' y='100' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='184' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='192' y='100' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='200' y='100' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='208' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='216' y='100' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='272' y='68' fill='currentColor' style='font-size:1em'>2</text>
+<text text-anchor='middle' x='280' y='132' fill='currentColor' style='font-size:1em'>3</text>
+<text text-anchor='middle' x='280' y='180' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>U</text>
+<text text-anchor='middle' x='288' y='68' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='288' y='180' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='296' y='20' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='296' y='68' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='296' y='132' fill='currentColor' style='font-size:1em'>F</text>
+<text text-anchor='middle' x='296' y='180' fill='currentColor' style='font-size:1em'>D</text>
+<text text-anchor='middle' x='304' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='304' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='304' y='132' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='304' y='180' fill='currentColor' style='font-size:1em'>E</text>
+<text text-anchor='middle' x='312' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='312' y='68' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='312' y='132' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='312' y='180' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='320' y='68' fill='currentColor' style='font-size:1em'>k</text>
+<text text-anchor='middle' x='320' y='132' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='328' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='328' y='180' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='336' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='336' y='68' fill='currentColor' style='font-size:1em'>U</text>
+<text text-anchor='middle' x='336' y='132' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='336' y='180' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='344' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='344' y='68' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='344' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='344' y='180' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='352' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='352' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='352' y='132' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='352' y='180' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='360' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='360' y='68' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='360' y='132' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='360' y='180' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='368' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='368' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='368' y='180' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='376' y='68' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='384' y='68' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='392' y='68' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='400' y='68' fill='currentColor' style='font-size:1em'>h</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>위와 같은 flow에서는 각 서버는 어떤 로그를 남겨야할까? 각 서버는 위에서 정의한 좋은 로그를 남긴다고 했을 때, 좋은 로그라고 할 수 있을까?</p>
+<p>이 때, 각 서버는 traceId가 각 서버가 만들기 때문에 서로 다른 요청이라고 볼 수 있다. 당연히 기술적으로 보면 여러개의 요청이 맞다. 하지만 비지니스적 관점에서 본다면 이 요청은 하나의 요청이라고 보는 것이 타당하다. (무조건 옳다기 보다는 비지니스적 관점으로 보는 것이 좋은 경우가 존재한다.)</p>
+<p>모든 서버에서 다 같은 맥락정보를 가지고 있는 것이 아니기 때문에 어떤 서버에서 발견한 장애의 원인을 찾기가 가끔은 어려울 수 있다. 예를 들어, <em>유저서버에서 userId를 가지고 payment 서버에 userId 1번이 이 시간에 오류가 발생했다. 원인이 무엇이냐</em> 라고 물었을 때, payment 서버는 userId를 따로 기록하지 않기 때문에 오류를 찾기가 어렵다.</p>
+<p>따라서 <strong>하나의 기준점을 정해주는 것이 필요하다.</strong> 이때 TraceId를 하나로 가져간다면 어땠을까? 오류가 발생했을 때, 왜 오류가 발생했는지 찾아가는 것이 빠를 것이다.</p>
+<p>따라서 요청을 보낼 때 TraceId 정보를 보내주는 것이 필요하다. 같은 요청이라고 판단되면 좋은 경우에 같은 TraceId로 로그를 남기게 된다면 어플리케이션 간에 분산된 호출 흐름을 추적할 수 있다. 이걸 <strong>분산 추적</strong>이라고 한다.</p>
+<h2 id="분산-추적">분산 추적 <a href="#%eb%b6%84%ec%82%b0-%ec%b6%94%ec%a0%81" class="anchor">🔗</a></h2><p>분산 추적은 단일 요청이 분산되어 처리되는 과정을 추적하는 방법이다.</p>
+<p>클라우드와 MSA의 등장으로 단일 요청에 대해 서로 다른 서버, 네트워크 경계를 넘나드는 것이 일반적인 일이 되었고 어느 통신 경로에서 문제 또는 성능 문제가 발생하는 지 찾아내는 기술이 필요해졌다.</p>
+<p>구글의 Dapper 논문 이후로 Zipkin, JAEGER 라는 오픈소스 분산 추적 도구가 등장했다. Spring 에서는 Sleuth 라는 하위 프로젝트를 통해 분산 추적을 가능하게 한다. Sleuth 공식문서 에서도 TraceId = X 라는 동일한 값을 공유하는 모습을 볼 수 있다.</p>
+<p>이렇게 TraceId를 하나로 공유하고 모든 로그를 하나의 도구에서 모아서 확인할 수 있는 중앙 집중식 로깅 체계를 만들고나면 이전에는 답할 수 없던 질문에 대해서 대답할 수 있다.</p>
+<p>분산추적의 효과는 참여하는 모든 서비스가 동일한 규격을 준수하여 추적 문맥 전파가 잘 호환될 수 있을 때 극대화 될 수 있다. 여러 표현법이 존재하지만 최근에는 World Wide Web consortium(W3C) Trace Context 규격으로 통일되는 중이다.</p>
+<p>코드 변경없이 자동으로 추적 문맥이 전파되게 해주는 Instrumentation 라이브러리가 OpenTelemetry로 통합되고 있다. 분산 추적에 대한 표준이 없어서 다양한 표현 및 구현체가 존재했지만 이제는 통일되어 가고 있는 것이다.</p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://nok3zy.github.io/tags/observility">Observility</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
