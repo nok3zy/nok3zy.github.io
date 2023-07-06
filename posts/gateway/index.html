@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Gateway | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="C l i e n t S e r v e r 트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
+하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
+C l i e n t S S S e e e r r r v v v e e e r r r A u t h 이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">Gateway</h1>
+
+    <div class="tip">
+        <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          822 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          4 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 184 57"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 56,0' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 168,0' fill='none' stroke='currentColor'></path>
+<path d='M 72,16 L 96,16' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 56,32' fill='none' stroke='currentColor'></path>
+<path d='M 112,32 L 168,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 56,0 L 56,32' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 112,32' fill='none' stroke='currentColor'></path>
+<path d='M 168,0 L 168,32' fill='none' stroke='currentColor'></path>
+<polygon points='104.000000,16.000000 92.000000,10.400000 92.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 96.000000, 16.000000)'></polygon>
+<text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>r</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.</p>
+<p>하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 272 217"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 104,0 L 168,0' fill='none' stroke='currentColor'></path>
+<path d='M 104,32 L 168,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,80 L 56,80' fill='none' stroke='currentColor'></path>
+<path d='M 104,80 L 160,80' fill='none' stroke='currentColor'></path>
+<path d='M 216,80 L 256,80' fill='none' stroke='currentColor'></path>
+<path d='M 72,96 L 88,96' fill='none' stroke='currentColor'></path>
+<path d='M 176,96 L 200,96' fill='none' stroke='currentColor'></path>
+<path d='M 0,112 L 56,112' fill='none' stroke='currentColor'></path>
+<path d='M 104,112 L 160,112' fill='none' stroke='currentColor'></path>
+<path d='M 216,112 L 256,112' fill='none' stroke='currentColor'></path>
+<path d='M 104,160 L 168,160' fill='none' stroke='currentColor'></path>
+<path d='M 104,192 L 168,192' fill='none' stroke='currentColor'></path>
+<path d='M 0,80 L 0,112' fill='none' stroke='currentColor'></path>
+<path d='M 56,80 L 56,112' fill='none' stroke='currentColor'></path>
+<path d='M 104,0 L 104,32' fill='none' stroke='currentColor'></path>
+<path d='M 104,80 L 104,112' fill='none' stroke='currentColor'></path>
+<path d='M 104,160 L 104,192' fill='none' stroke='currentColor'></path>
+<path d='M 160,80 L 160,112' fill='none' stroke='currentColor'></path>
+<path d='M 168,0 L 168,32' fill='none' stroke='currentColor'></path>
+<path d='M 168,160 L 168,192' fill='none' stroke='currentColor'></path>
+<path d='M 216,80 L 216,112' fill='none' stroke='currentColor'></path>
+<path d='M 256,80 L 256,112' fill='none' stroke='currentColor'></path>
+<path d='M 72,96 L 104,32' fill='none' stroke='currentColor'></path>
+<path d='M 168,160 L 200,96' fill='none' stroke='currentColor'></path>
+<path d='M 72,96 L 104,160' fill='none' stroke='currentColor'></path>
+<path d='M 168,32 L 200,96' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='8' y='100' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='16' y='100' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='24' y='100' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='32' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='40' y='100' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='48' y='100' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='112' y='100' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='112' y='180' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='180' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='128' y='100' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='128' y='180' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='136' y='100' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='136' y='180' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='144' y='100' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='144' y='180' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='152' y='100' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='152' y='180' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='224' y='100' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='232' y='100' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='240' y='100' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='248' y='100' fill='currentColor' style='font-size:1em'>h</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.</p>
+<p>그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까? 그리고 이것을 Gateway라고 부른다.</p>
+<p>이 글은 <a href="https://www.youtube.com/watch?v=Zs3jVelp0L8" target="_blank" rel="noopener">토스 SLASH23</a>을 보고 정리한 내용입니다.</p>
+<hr>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 312 185"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 240,0 L 296,0' fill='none' stroke='currentColor'></path>
+<path d='M 200,16 L 232,16' fill='none' stroke='currentColor'></path>
+<path d='M 240,32 L 296,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 56,64' fill='none' stroke='currentColor'></path>
+<path d='M 112,64 L 176,64' fill='none' stroke='currentColor'></path>
+<path d='M 64,80 L 88,80' fill='none' stroke='currentColor'></path>
+<path d='M 0,96 L 56,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,96 L 176,96' fill='none' stroke='currentColor'></path>
+<path d='M 240,128 L 296,128' fill='none' stroke='currentColor'></path>
+<path d='M 200,144 L 224,144' fill='none' stroke='currentColor'></path>
+<path d='M 240,160 L 296,160' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 0,96' fill='none' stroke='currentColor'></path>
+<path d='M 56,64 L 56,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,64 L 112,96' fill='none' stroke='currentColor'></path>
+<path d='M 176,64 L 176,96' fill='none' stroke='currentColor'></path>
+<path d='M 240,0 L 240,32' fill='none' stroke='currentColor'></path>
+<path d='M 240,128 L 240,160' fill='none' stroke='currentColor'></path>
+<path d='M 296,0 L 296,32' fill='none' stroke='currentColor'></path>
+<path d='M 296,128 L 296,160' fill='none' stroke='currentColor'></path>
+<path d='M 176,64 L 200,16' fill='none' stroke='currentColor'></path>
+<path d='M 176,96 L 200,144' fill='none' stroke='currentColor'></path>
+<polygon points='96.000000,80.000000 84.000000,74.400002 84.000000,85.599998' fill='currentColor' transform='rotate(0.000000, 88.000000, 80.000000)'></polygon>
+<polygon points='232.000000,144.000000 220.000000,138.399994 220.000000,149.600006' fill='currentColor' transform='rotate(0.000000, 224.000000, 144.000000)'></polygon>
+<polygon points='240.000000,16.000000 228.000000,10.400000 228.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 232.000000, 16.000000)'></polygon>
+<text text-anchor='middle' x='8' y='84' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='16' y='84' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='24' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='32' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='40' y='84' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='48' y='84' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='112' y='116' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='112' y='132' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='84' fill='currentColor' style='font-size:1em'>G</text>
+<text text-anchor='middle' x='120' y='116' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='120' y='132' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='128' y='84' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='128' y='116' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='128' y='132' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='136' y='84' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='136' y='116' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='136' y='132' fill='currentColor' style='font-size:1em'>.</text>
+<text text-anchor='middle' x='144' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='144' y='132' fill='currentColor' style='font-size:1em'>.</text>
+<text text-anchor='middle' x='152' y='84' fill='currentColor' style='font-size:1em'>w</text>
+<text text-anchor='middle' x='160' y='84' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='168' y='84' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='248' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='248' y='148' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='256' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='256' y='148' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='264' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='264' y='148' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='272' y='20' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='272' y='148' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='280' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='280' y='148' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='288' y='148' fill='currentColor' style='font-size:1em'>r</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>Gateway가 필요한 공통 로직을 수행한 이후에, 뒤에 있는 서버들로 요청을 전달해준다.</p>
+<p>Gateway는 요청이 오면 정의된 설정에 따라 요청을 라우팅하는 서버라고 보면 되는데 라우팅하기 전에 사전에 설정된 필터들을 수행한다.</p>
+<blockquote>
+<p>&quot; 이 API는 이 필터랑 이 필터를 통과해야만 진행할 수 있어 ! &quot;</p>
+</blockquote>
+<p>흔히 이런 설정은 Route 단위로 구성할 수 있다. 그리고 Route 는 Predicate 와 Filter로 구분할 수 있다.</p>
+<p><strong>Predicate</strong>는 요청을 구분할때 사용하는 값이고 Path, Method, Host 등으로 요청을 맵핑한다. 쉽게 말하면, 요청의 목적지라고 할 수 있다.<br>
+<strong>Filter</strong>는 매칭된 요청에 대한 전처리나 서비스 응답에 대한 후처리를 구현한다.</p>
+<h2 id="게이트웨이-패턴">게이트웨이 패턴 <a href="#%ea%b2%8c%ec%9d%b4%ed%8a%b8%ec%9b%a8%ec%9d%b4-%ed%8c%a8%ed%84%b4" class="anchor">🔗</a></h2><p>각 요청에 대한 필터들을 추가해주면 이 Gateway는 하나의 거대한 모놀리틱 서버가 된다. 만약 Web, Mobile에서 필요한 로직이 다르다면 이 Gateway는 그 모두를 가지고 있어야만 한다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 368 121"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 48,0' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 208,0' fill='none' stroke='currentColor'></path>
+<path d='M 72,16 L 96,16' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 48,32' fill='none' stroke='currentColor'></path>
+<path d='M 224,32 L 256,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 72,64' fill='none' stroke='currentColor'></path>
+<path d='M 224,64 L 256,64' fill='none' stroke='currentColor'></path>
+<path d='M 88,80 L 96,80' fill='none' stroke='currentColor'></path>
+<path d='M 0,96 L 72,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,96 L 208,96' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 0,96' fill='none' stroke='currentColor'></path>
+<path d='M 48,0 L 48,32' fill='none' stroke='currentColor'></path>
+<path d='M 72,64 L 72,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 112,96' fill='none' stroke='currentColor'></path>
+<path d='M 208,0 L 208,96' fill='none' stroke='currentColor'></path>
+<polygon points='104.000000,16.000000 92.000000,10.400000 92.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 96.000000, 16.000000)'></polygon>
+<polygon points='104.000000,80.000000 92.000000,74.400002 92.000000,85.599998' fill='currentColor' transform='rotate(0.000000, 96.000000, 80.000000)'></polygon>
+<polygon points='264.000000,32.000000 252.000000,26.400000 252.000000,37.599998' fill='currentColor' transform='rotate(0.000000, 256.000000, 32.000000)'></polygon>
+<polygon points='264.000000,64.000000 252.000000,58.400002 252.000000,69.599998' fill='currentColor' transform='rotate(0.000000, 256.000000, 64.000000)'></polygon>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>W</text>
+<text text-anchor='middle' x='16' y='84' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='24' y='84' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='32' y='84' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='40' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='48' y='84' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='56' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>B</text>
+<text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='128' y='36' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>g</text>
+<text text-anchor='middle' x='136' y='36' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='144' y='36' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='144' y='52' fill='currentColor' style='font-size:1em'>G</text>
+<text text-anchor='middle' x='152' y='36' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='152' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='160' y='36' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='160' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='168' y='36' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='168' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='176' y='36' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='176' y='52' fill='currentColor' style='font-size:1em'>w</text>
+<text text-anchor='middle' x='184' y='36' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='184' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='192' y='36' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='192' y='52' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='280' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='288' y='52' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='296' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='296' y='84' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='304' y='52' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='304' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='312' y='52' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='312' y='84' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='320' y='84' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='328' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='336' y='84' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='344' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='352' y='84' fill='currentColor' style='font-size:1em'>s</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>그리고 그걸 해결하기 위한 패턴이 BFF(Backend For Frontend)이다.</p>
+<p>BFF는 Client 별 <strong>관심사를 분리</strong>하고 클라이언트에 맞는 전략을 가져가도록 Gateway를 분리했다고 생각하면 된다.</p>
+
+
+
+<div class="goat svg-container ">
+  
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      font-family="Menlo,Lucida Console,monospace"
+      
+        viewBox="0 0 392 121"
+      >
+      <g transform='translate(8,16)'>
+<path d='M 0,0 L 48,0' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 208,0' fill='none' stroke='currentColor'></path>
+<path d='M 72,16 L 96,16' fill='none' stroke='currentColor'></path>
+<path d='M 232,16 L 264,16' fill='none' stroke='currentColor'></path>
+<path d='M 0,32 L 48,32' fill='none' stroke='currentColor'></path>
+<path d='M 112,32 L 208,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 72,64' fill='none' stroke='currentColor'></path>
+<path d='M 112,64 L 232,64' fill='none' stroke='currentColor'></path>
+<path d='M 88,80 L 96,80' fill='none' stroke='currentColor'></path>
+<path d='M 256,80 L 296,80' fill='none' stroke='currentColor'></path>
+<path d='M 0,96 L 72,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,96 L 232,96' fill='none' stroke='currentColor'></path>
+<path d='M 0,0 L 0,32' fill='none' stroke='currentColor'></path>
+<path d='M 0,64 L 0,96' fill='none' stroke='currentColor'></path>
+<path d='M 48,0 L 48,32' fill='none' stroke='currentColor'></path>
+<path d='M 72,64 L 72,96' fill='none' stroke='currentColor'></path>
+<path d='M 112,0 L 112,32' fill='none' stroke='currentColor'></path>
+<path d='M 112,64 L 112,96' fill='none' stroke='currentColor'></path>
+<path d='M 208,0 L 208,32' fill='none' stroke='currentColor'></path>
+<path d='M 232,64 L 232,96' fill='none' stroke='currentColor'></path>
+<polygon points='104.000000,16.000000 92.000000,10.400000 92.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 96.000000, 16.000000)'></polygon>
+<polygon points='104.000000,80.000000 92.000000,74.400002 92.000000,85.599998' fill='currentColor' transform='rotate(0.000000, 96.000000, 80.000000)'></polygon>
+<polygon points='272.000000,16.000000 260.000000,10.400000 260.000000,21.600000' fill='currentColor' transform='rotate(0.000000, 264.000000, 16.000000)'></polygon>
+<polygon points='304.000000,80.000000 292.000000,74.400002 292.000000,85.599998' fill='currentColor' transform='rotate(0.000000, 296.000000, 80.000000)'></polygon>
+<text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>W</text>
+<text text-anchor='middle' x='16' y='84' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='24' y='84' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='32' y='84' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='40' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='48' y='84' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='56' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>W</text>
+<text text-anchor='middle' x='120' y='84' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='128' y='84' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='136' y='84' fill='currentColor' style='font-size:1em'>b</text>
+<text text-anchor='middle' x='144' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>G</text>
+<text text-anchor='middle' x='152' y='84' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='160' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='176' y='84' fill='currentColor' style='font-size:1em'>G</text>
+<text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>w</text>
+<text text-anchor='middle' x='184' y='84' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='192' y='84' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='200' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='208' y='84' fill='currentColor' style='font-size:1em'>w</text>
+<text text-anchor='middle' x='216' y='84' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='224' y='84' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='296' y='20' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='304' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='304' y='52' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='312' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='320' y='52' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='320' y='84' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='328' y='52' fill='currentColor' style='font-size:1em'>y</text>
+<text text-anchor='middle' x='328' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='336' y='84' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='344' y='84' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='352' y='84' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='360' y='84' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='368' y='84' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='376' y='84' fill='currentColor' style='font-size:1em'>s</text>
+</g>
+
+    </svg>
+  
+</div>
+<p>그리고 <strong>요청방향에 맞게</strong> 분리하는 Ingress, Engress 패턴이 있다.</p>
+<p>Ingress Gateway는 클러스터에 들어오는 요청을 처리하고, Engress Gateway는 나가는 요청을 처리한다.</p>
+<p>따라서 이런 Gateway들을 목적에 맞게 Gateway를 사용하는 것이 중요하다. 토스에서도 App, Web, SSR 등 여러 요청에 대해서 다른 Gateway들을 가지고 있고, 다른 외부 클러스터에 요청을 보내는 경우에 Engress Gateway를 두고 있다.</p>
+<h2 id="example-of-toss">Example of Toss <a href="#example-of-toss" class="anchor">🔗</a></h2><p>토스에서는 Spring Cloud Gateway를 사용하여 Gateway를 개발하고 있다.
+Spring Cloud Gateway는 Spring Webflux를 통해 구현되어 있고 내부적으로는 Reactor-Netty를 이용하여 비동기 처리를 하고 있다.</p>
+<p>토스에서는 Gateway에서 다음과 같은 로직들을 처리하고 있다고 한다.</p>
+<blockquote>
+<p>Request 처리, 유저, 보안, 서비스 안정화</p>
+</blockquote>
+<h3 id="request-처리">Request 처리 <a href="#request-%ec%b2%98%eb%a6%ac" class="anchor">🔗</a></h3><p>Gateway에서 우선적으로 처리해야하는 것은 Request를 Sanitize하는 것이다. (Sanitize는 올바르지 않은 요청들을 올바른 값들로 바꿔주거나 지우는 것을 의미한다.)</p>
+<p>이 로직을 통해서 악의적인 값을 필터링하고 서비스에서 필요한 값들을 채워 넣을 수 있다. 예를 들어, Gateway는 서비스의 진입점이기 때문에 <a href="">Observility에 필요한 TraceID</a>를 생성하여 전파할 수 있다.</p>
+<p>그리고 하나의 트랜잭션안에서 각 서버에서 요청하는 공통적인 중복 요청에 대해서도 개선이 가능하다. 게이트웨이에서 실행하고 정보를 header로 넣어주면 중복요청을 줄여 서버 리소스가 낭비되는 것을 막을 수 있다.</p>
+<h3 id="유저">유저 <a href="#%ec%9c%a0%ec%a0%80" class="anchor">🔗</a></h3><p>공통적인 요청이 가장 많은 것은 유저 정보에 관한 것이다. 유저 정보가 필요하면 유저 API를 호출하여 유저 정보를 가져오고 있었는데, 이는 트랜잭션 내의 중복요청으로 서버 리소스의 낭비를 발생시킨다.</p>
+<p>그리고 이를 개선하기 위해서 이를 위해서 <a href="https://netflixtechblog.com/edge-authentication-and-token-agnostic-identity-propagation-514e47e0b602" target="_blank" rel="noopener">넷플릭스의 Passport</a>를 참고했다고 한다.</p>
+<p>Passport는 사용자 기기정보와 유저정보를 담은 하나의 토큰이다. App에서 유저식별키와 함께 API를 쏘면, Gateway에서 이 키를 토대로 인증서버에 Passport를 요청합니다.</p>
+<p>passport에는 디바이스 정보와 유저정보가 들어있고 게이트웨이는 이걸 serialize하여 서비스에 전파한다. 유저 정보가 필요한 서비스들은 헤더에 담긴 passport를 열어서 정보를 확인하면 된다.</p>
+<h3 id="보안">보안 <a href="#%eb%b3%b4%ec%95%88" class="anchor">🔗</a></h3><p>App에서 사용자가 요청을 보낼때 암호화하고, 게이트웨이가 이를 복호화해서 서버들로 메세지를 전송하게 된다. SSR 같이 종단간 암호화를 사용하기 어려운 스펙의 경우에는 JWT를 통한 API요청 기능을 지원하고 있다. 그리고 Oauth2도 제공하고 있다.</p>
+<p>위변조 되지 않았는지 해당 부분을 확인하는 로직도 포함되어 있다. FDS(Fraud Detection System)을 두고 브루트포스를 이용한 정보획득을 하고 있는지, 앱을 분석하고 있는지 사용자의 요청을 분석하는 로직도 존재한다.</p>
+<h3 id="서비스-안정화">서비스 안정화 <a href="#%ec%84%9c%eb%b9%84%ec%8a%a4-%ec%95%88%ec%a0%95%ed%99%94" class="anchor">🔗</a></h3><p>MSA에서는 많은 서비스들이 거미줄처럼 상호작용을 하게 된다. 따라서 그 중 하나의 서비스가 응답지연이 발생하게 된다면, 다른 서비스들에 응답 지연이 전파된다. 이 지연이 전파되면서 시스템이 먹통이 된다.</p>
+<p>이를 피하기 위해서 응답지연을 유발하는 서비스에게는 요청을 따로 보내지 않는 서킷브레이커가 필요하다. 내부 트래픽 사이에서의 서킷브레이크도 필요하지만 근원적인 트래픽을 발생시키는 클라이언트에 백프래셔를 주기 위해서는 게이트웨이에도 서킷브레이킹을 거는 것이 필요하다.</p>
+<p>Istio 를 이용한 인프라 레이어의 서킷브레이킹, 혹은 Resilience4J난 Hystrix같은 라이브러리를 이용한 방법이 있다. Istio는 호스트 단위로 쉽고 빠르게 적용이 가능하며 어플리케이션 개발주기와 독립적으로 관리가 가능하지만 호스트 단위로만 설정이 가능하고 설정 룰에도 한계가 존재한고 한다. 따라서 토스에서는 라이브러리를 이용해 서킷브레이킹을 하고 있다.</p>
+<h2 id="운영">운영 <a href="#%ec%9a%b4%ec%98%81" class="anchor">🔗</a></h2><p>게이트웨이는 서비스 진입점이기 때문에 문제가 생기면 모든 서비스에 먹통이 생긴다. 따라서 이를 잘 운영하는 것이 중요하다.</p>
+<p>코드 상의 이유로 문제가 생길 수도 있어서 가독성 좋은 yaml 파일로 마이그레이션되도록 설정을 해놓고 git으로 관리한다. 그리고 Spring Gateway는 Spring Cloud로 설정을 임포트할 수 있기 때문에 실제 Gateway Code와 Route설정을 따로 관리할 수 있다.</p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://nok3zy.github.io/tags/gateway">gateway</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
