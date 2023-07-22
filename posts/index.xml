@@ -13,9 +13,10 @@
       <pubDate>Thu, 06 Jul 2023 22:57:22 +0900</pubDate>
       
       <guid>https://nok3zy.github.io/posts/gateway/</guid>
-      <description>C l i e n t S e r v e r 트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
+      <description>트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
 하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
-C l i e n t S S S e e e r r r v v v e e e r r r A u t h 이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다.</description>
+이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.
+그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까?</description>
     </item>
     
     <item>
