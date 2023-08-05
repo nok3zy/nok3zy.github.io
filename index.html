@@ -67,6 +67,25 @@
         
         <section class="item">
           <div>
+            <h1 class="title"><a href='/posts/optimize-api/'>Optimize API</a></h1>
+            <div class ="date">
+                <time datetime="2023-07-22 17:50:41 &#43;0900 KST">Jul 22, 2023</time>  
+            </div>
+          </div>
+
+          
+              <div class="summary">MongoRepository(혹은 JpaRepository)같은 ORM 인터페이스를 통해서 Entity를 조회했을 때, 어떻게 쿼리를 보낼까?
+처음에는 DB.Collection.findOne() 혹은 Select * from Table LIMIT 1 정도의 쿼리를 보내지 않을까? 이지 않을까 추측했다. 테이블(혹은 도큐먼트)의 모든 필드를 가져와서 내부적으로 맵핑을 하지 않을까 싶었다. JPA는 내부적으로 Mapper가 존재해서 Document to Object로 변경해주는 작업을 하고 있는 걸로 아는데, 그렇다면 모든 필드를 조회하고, 코드에서 필드로 명시된 경우에만 맵핑을 해주는 것은 아닐까?
+아래의 경우에는 어떻게 찾을까?
+//Product Java Code Product{ id name } //Product Collecion Product{ id name price description } Java code에서는 Product의 seller라는 필드를 포함하고 있지 않는다.</div>
+          
+
+        </section>
+    
+        
+        
+        <section class="item">
+          <div>
             <h1 class="title"><a href='/posts/gateway/'>Gateway</a></h1>
             <div class ="date">
                 <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>  
@@ -97,24 +116,6 @@
 이 글은 토스 SLASH23을 보고 정리한 내용입니다.
 MSA 환경에서의 모니터링 🔗클라우드, MSA 아키텍처 등은 기존의 IT 시스템이 가지고 있던 문제들을 개선하며, 민첩한 개발을 할 수 있게 한다. 이 기술들은 기술의 기반환경을 가상화, 추상화를 통해 기존의 문제들을 해결하는데 도움을 주고 있다.
 과연 클라우드와 MSA 아키텍처가 장점만 있는 것일까?</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/mongo-custom-converter/'>Mongo Custom Converter</a></h1>
-            <div class ="date">
-                <time datetime="2023-06-13 17:36:18 &#43;0900 KST">Jun 13, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">Dynamic Creative 에서 상품 데이터를 Catalog로 만들면서, Document에 존재하는 국제화 데이터를 가공할 필요가 있었다. 상품의 Title이나 Description 등의 정보들이 있었고, 또한 해당 국가에서 접근이 가능한 상품인지 아닌지 등을 따져야하는 경우가 있었다.
-여기서 생긴 문제는 필요한 데이터의 키값이 다르게 설정되어 있었다는 것이다.
-Title { KR : &#34;커피&#34;, US : &#34;Coffee&#34;, JP : &#34;コーヒー&#34; } Description { ko : &#34;안녕하세요&#34;, en : &#34;Hello&#34;, ja : &#34;こんにちは&#34; } 이런 식으로 각 국가마다 노출해줄 데이터의 키값이 달랐다.</div>
           
 
         </section>

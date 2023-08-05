@@ -67,6 +67,24 @@
         
         <section class="item">
           <div>
+            <h1 class="title"><a href='/posts/mongo-custom-converter/'>Mongo Custom Converter</a></h1>
+            <div class ="date">
+                <time datetime="2023-06-13 17:36:18 &#43;0900 KST">Jun 13, 2023</time>  
+            </div>
+          </div>
+
+          
+              <div class="summary">Dynamic Creative 에서 상품 데이터를 Catalog로 만들면서, Document에 존재하는 국제화 데이터를 가공할 필요가 있었다. 상품의 Title이나 Description 등의 정보들이 있었고, 또한 해당 국가에서 접근이 가능한 상품인지 아닌지 등을 따져야하는 경우가 있었다.
+여기서 생긴 문제는 필요한 데이터의 키값이 다르게 설정되어 있었다는 것이다.
+Title { KR : &#34;커피&#34;, US : &#34;Coffee&#34;, JP : &#34;コーヒー&#34; } Description { ko : &#34;안녕하세요&#34;, en : &#34;Hello&#34;, ja : &#34;こんにちは&#34; } 이런 식으로 각 국가마다 노출해줄 데이터의 키값이 달랐다.</div>
+          
+
+        </section>
+    
+        
+        
+        <section class="item">
+          <div>
             <h1 class="title"><a href='/posts/upload-updated-catalog-every-n-hours/'>Upload updated catalog every N hours</a></h1>
             <div class ="date">
                 <time datetime="2023-05-26 16:32:39 &#43;0900 KST">May 26, 2023</time>  
@@ -95,25 +113,6 @@ final MongoCollection&lt;Document&gt; collection = mongoTemplate.getCollection(C
               <div class="summary">하나의 서비스를 위해 k8s의 여러 자원들이 존재한다. 예를 들어, service, serviceAccount, ingress 등이 있다. 그리고 이런 자원들을 정리하는 것이 helm release이다. helm의 release는 여러 쿠버네티스 상의 자원들을 관리해주며, Release를 uninstall을 하면 위 자원들도 같이 제거된다. 따라서 기존에 존재하는 모든 녀석들을 이와 같이 제거해주고 Release를 만들때 다 같이 만든다.
 kubectl을 이용해서 배포하는 서비스의 경우, release가 관리가 되지 않아서 필요가 없어지는 경우에는 매번 손으로 제거해줘야 하는 귀찮음이 존재했다.
 그래서 helm upgrade로 배포할 수 있도록 변경했더니 resource conflict 오류가 발생했다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/k8s-memory-cpu-setting/'>K8s memory, cpu setting</a></h1>
-            <div class ="date">
-                <time datetime="2023-05-07 16:14:25 &#43;0900 KST">May 7, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">이 글은 Natan Yellin at Robusta의 k8s memory limit, cpu-limit을 읽고 정리한 글입니다.
-CPU 🔗많은 사람들이 K8s에서 CPU limit이 필요하다고 하는데 그렇지 않습니다. 대부분의 상황에서 cpu limit은 오히려 해롭습니다.
-왜 CPU limit이 해로운지 비유로 설명하겠습니다. CPU는 물, CPU starvation은 죽음입니다. CPU와 마찬가지로 이 이야기에서의 물은 재생 가능한 자원입니다. 간단히 말해, 특정 순간에 CPU 사용량이 100% 라고 해서 완전히 소모되지 않는 다는 것입니다. CPU는 항상 재생합니다.
-이 이야기에서 사람은 사막에서 하루에 1 리터가 필요합니다.</div>
           
 
         </section>
