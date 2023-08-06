@@ -114,7 +114,7 @@ Spring Cloud Gateway는 Spring Webflux를 통해 구현되어 있고 내부적�
 <p>Request 처리, 유저, 보안, 서비스 안정화</p>
 </blockquote>
 <h3 id="request-처리">Request 처리 <a href="#request-%ec%b2%98%eb%a6%ac" class="anchor">🔗</a></h3><p>Gateway에서 우선적으로 처리해야하는 것은 Request를 Sanitize하는 것이다. (Sanitize는 올바르지 않은 요청들을 올바른 값들로 바꿔주거나 지우는 것을 의미한다.)</p>
-<p>이 로직을 통해서 악의적인 값을 필터링하고 서비스에서 필요한 값들을 채워 넣을 수 있다. 예를 들어, Gateway는 서비스의 진입점이기 때문에 <a href="">Observility에 필요한 TraceID</a>를 생성하여 전파할 수 있다.</p>
+<p>이 로직을 통해서 악의적인 값을 필터링하고 서비스에서 필요한 값들을 채워 넣을 수 있다. 예를 들어, Gateway는 서비스의 진입점이기 때문에 <a href="../posts/msa-observility/">Observility에 필요한 TraceID</a>를 생성하여 전파할 수 있다.</p>
 <p>그리고 하나의 트랜잭션안에서 각 서버에서 요청하는 공통적인 중복 요청에 대해서도 개선이 가능하다. 게이트웨이에서 실행하고 정보를 header로 넣어주면 중복요청을 줄여 서버 리소스가 낭비되는 것을 막을 수 있다.</p>
 <h3 id="유저">유저 <a href="#%ec%9c%a0%ec%a0%80" class="anchor">🔗</a></h3><p>공통적인 요청이 가장 많은 것은 유저 정보에 관한 것이다. 유저 정보가 필요하면 유저 API를 호출하여 유저 정보를 가져오고 있었는데, 이는 트랜잭션 내의 중복요청으로 서버 리소스의 낭비를 발생시킨다.</p>
 <p>그리고 이를 개선하기 위해서 이를 위해서 <a href="https://netflixtechblog.com/edge-authentication-and-token-agnostic-identity-propagation-514e47e0b602" target="_blank" rel="noopener">넷플릭스의 Passport</a>를 참고했다고 한다.</p>

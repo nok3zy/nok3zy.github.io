@@ -67,56 +67,16 @@
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/java-gc/'>Java GC</a></h1>
+            <h1 class="title"><a href='/posts/2022%EB%85%84-%ED%9A%8C%EA%B3%A0/'>2022년 회고</a></h1>
             <div class ="date">
-                <time datetime="2023-08-06 20:49:40 &#43;0900 KST">Aug 6, 2023</time>  
+                <time datetime="2023-01-01 01:13:08 &#43;0900 KST">Jan 1, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">GC(Garbage Collecotor)는 사용하지 않는 메모리들을 정리해준다. JVM에서도 GC를 통해서 사용하지 않는 메모리들을 다시 사용가능한 상태로 만든다. 이것이 어떻게 동작하는 지 알기 위해서는 먼저 JVM의 메모리 구조를 알아야한다.
-JVM Memory 🔗 JVM Memory 구조는 위의 사진처럼 5개의 영역으로 구분할 수 있다.
-Method와 Heap은 모든 쓰레드가 공유하는 영역이고, 나머지 Stack, PC Register, Native Method Stack은 각 쓰레드가 하나씩 부여받는다.
-Method Class, Interface, Method, field, Static variable 등이 저장되는 영역.
-Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/optimize-api/'>Optimize API</a></h1>
-            <div class ="date">
-                <time datetime="2023-07-22 17:50:41 &#43;0900 KST">Jul 22, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">MongoRepository(혹은 JpaRepository)같은 ORM 인터페이스를 통해서 Entity를 조회했을 때, 어떻게 쿼리를 보낼까?
-처음에는 DB.Collection.findOne() 혹은 Select * from Table LIMIT 1 정도의 쿼리를 보내지 않을까? 이지 않을까 추측했다. 테이블(혹은 도큐먼트)의 모든 필드를 가져와서 내부적으로 맵핑을 하지 않을까 싶었다. JPA는 내부적으로 Mapper가 존재해서 Document to Object로 변경해주는 작업을 하고 있는 걸로 아는데, 그렇다면 모든 필드를 조회하고, 코드에서 필드로 명시된 경우에만 맵핑을 해주는 것은 아닐까?
-아래의 경우에는 어떻게 찾을까?
-//Product Java Code Product{ id name } //Product Collecion Product{ id name price description } Java code에서는 Product의 seller라는 필드를 포함하고 있지 않는다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/gateway/'>Gateway</a></h1>
-            <div class ="date">
-                <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
-하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
-이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.
-그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까?</div>
+              <div class="summary">1. 개발자가 되었다. 🔗취업을 준비하면서 과연 내가 개발을 할 수 있을까 하는 생각에서 벗어날 수 없었다. 무엇을 공부해야 하는지, 준비해야하는 지 알고 있었지만 항상 부족하다고 느꼈다. 흔히들 말하는 코딩테스트와 프로젝트을 준비했지만 그렇게 경쟁력이 있다고 느껴지진 않았다.
+코딩테스트를 준비하기로 한 첫번째 달에 매일 3문제씩 풀어서 한 달만에 100문제를 풀었다. 그리고 매일 적어도 한문제씩 1년을 풀었다. 그렇게 풀다보니 어떤 코딩테스트를 봐도 통과할 정도는 되었다.
+하지만 문제는 프로젝트였다. 프로젝트를 한다고 했는데 어떻게 준비해야할지 몰랐고 한다고 했던 것들은 정말 봐주기 어려울 정도였다.</div>
           
 
         </section>
@@ -125,13 +85,13 @@ Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.
     
         <div class="pagination">
           
-          
-          
-              <span class="next">
-                  <a href="/page/2/">
-                      Older posts <span class="arrow">→</span>
+              <span class="prev">
+                  <a href="/page/5/">
+                      <span class="arrow">←</span> Newer posts
                   </a>
-              </span>
+            </span>
+          
+          
           
         </div>
     

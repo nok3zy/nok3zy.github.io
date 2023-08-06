@@ -6,7 +6,20 @@
     <description>Recent content in Posts on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Jul 2023 17:50:41 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Aug 2023 20:49:40 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java GC</title>
+      <link>https://nok3zy.github.io/posts/java-gc/</link>
+      <pubDate>Sun, 06 Aug 2023 20:49:40 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/java-gc/</guid>
+      <description>GC(Garbage Collecotor)는 사용하지 않는 메모리들을 정리해준다. JVM에서도 GC를 통해서 사용하지 않는 메모리들을 다시 사용가능한 상태로 만든다. 이것이 어떻게 동작하는 지 알기 위해서는 먼저 JVM의 메모리 구조를 알아야한다.
+JVM Memory 🔗 JVM Memory 구조는 위의 사진처럼 5개의 영역으로 구분할 수 있다.
+Method와 Heap은 모든 쓰레드가 공유하는 영역이고, 나머지 Stack, PC Register, Native Method Stack은 각 쓰레드가 하나씩 부여받는다.
+Method Class, Interface, Method, field, Static variable 등이 저장되는 영역.
+Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.</description>
+    </item>
+    
     <item>
       <title>Optimize API</title>
       <link>https://nok3zy.github.io/posts/optimize-api/</link>
