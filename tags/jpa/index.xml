@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JPA on Nok</title>
+    <link>https://nok3zy.github.io/tags/jpa/</link>
+    <description>Recent content in JPA on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Jul 2023 17:50:41 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/jpa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Optimize API</title>
+      <link>https://nok3zy.github.io/posts/optimize-api/</link>
+      <pubDate>Sat, 22 Jul 2023 17:50:41 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/optimize-api/</guid>
+      <description>MongoRepository(혹은 JpaRepository)같은 ORM 인터페이스를 통해서 Entity를 조회했을 때, 어떻게 쿼리를 보낼까?
+처음에는 DB.Collection.findOne() 혹은 Select * from Table LIMIT 1 정도의 쿼리를 보내지 않을까? 이지 않을까 추측했다. 테이블(혹은 도큐먼트)의 모든 필드를 가져와서 내부적으로 맵핑을 하지 않을까 싶었다. JPA는 내부적으로 Mapper가 존재해서 Document to Object로 변경해주는 작업을 하고 있는 걸로 아는데, 그렇다면 모든 필드를 조회하고, 코드에서 필드로 명시된 경우에만 맵핑을 해주는 것은 아닐까?
+아래의 경우에는 어떻게 찾을까?
+//Product Java Code Product{ id name } //Product Collecion Product{ id name price description } Java code에서는 Product의 seller라는 필드를 포함하고 있지 않는다.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,20 @@
     <description>Recent content in kafka on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Apr 2023 19:18:02 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Aug 2023 19:14:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why Kafka is fast</title>
+      <link>https://nok3zy.github.io/posts/why-kafka-is-fast/</link>
+      <pubDate>Wed, 09 Aug 2023 19:14:18 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/why-kafka-is-fast/</guid>
+      <description>카프카는 디스크를 사용하는데 어떻게 빠를까?
+근데 빠르다는 것은 좀 모호한 것 같다. 레이턴시가 짧다는 걸까? 처리량이 많다는 걸까? 카프카는 대용량 데이터를 처리하는 것을 최적화했다.
+사람들이 카프카가 빠르다고 하는 의미는, 보통 카프카가 큰 데이터를 효율적으로 옮기는 능력이 좋다는 것을 의미한다.
+카프카의 성능이 좋은 이유에는 많은 요소가 있겠지만, Sequential IO 와 Zero Copy , 이 두 가지가 큰 이점을 제공한다.
+Sequential IO 🔗일반적으로 디스크에 접근하는 것이 메모리 접근보다 느린 것은 맞다. 하지만 디스크가 느린 이유는 바로 data-access 방식의 문제이다.</description>
+    </item>
+    
     <item>
       <title>Let&#39;s use Kafka</title>
       <link>https://nok3zy.github.io/posts/lets-use-kafka/</link>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DB on Nok</title>
+    <link>https://nok3zy.github.io/tags/db/</link>
+    <description>Recent content in DB on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 Aug 2023 21:12:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/db/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DB ConnectionPool</title>
+      <link>https://nok3zy.github.io/posts/db-connectionpool/</link>
+      <pubDate>Thu, 10 Aug 2023 21:12:18 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/db-connectionpool/</guid>
+      <description>DB와 어플리케이션 간 통신을 하기 위한 연결점을 Connection이라 한다. 그리고 이를 미리 여러개를 만들어 놓은 것을 Connection Pool이라고 한다.
+Connection을 미리 만들어 놓는 이유는 서버와 DB를 연결할 때 드는 비용이 많이 들기 때문이다.
+TCP 와 ConnectionPool 🔗DBMS와의 통신은 TCP로 이루어진다. 네트워크에 대해 공부했다면, 많이들 TCP와 UDP에 대해서 많이 들어봤을 것이다.
+TCP는 흔히들 신뢰성이 있다고 말하는데, 그 이유는 3-way handshake 과정을 통해 연결성을 보장한 통신을 시작하기 때문이다. TCP는 자신이 보낸 데이터에 대해 상대방이 받았다는 의미의 응답 패킷을 다시 받아야 통신이 정상적으로 이루어졌다고 생각한다.</description>
+    </item>
+    
+  </channel>
+</rss>

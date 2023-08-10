@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://nok3zy.github.io/tags/db/</loc>
+    <lastmod>2023-08-10T21:12:18+09:00</lastmod>
+  </url><url>
     <loc>https://nok3zy.github.io/posts/db-connectionpool/</loc>
     <lastmod>2023-08-10T21:12:18+09:00</lastmod>
   </url><url>
@@ -11,14 +14,38 @@
     <loc>https://nok3zy.github.io/posts/</loc>
     <lastmod>2023-08-10T21:12:18+09:00</lastmod>
   </url><url>
+    <loc>https://nok3zy.github.io/tags/</loc>
+    <lastmod>2023-08-10T21:12:18+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/kafka/</loc>
+    <lastmod>2023-08-09T19:14:18+09:00</lastmod>
+  </url><url>
     <loc>https://nok3zy.github.io/posts/why-kafka-is-fast/</loc>
     <lastmod>2023-08-09T19:14:18+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/java/</loc>
+    <lastmod>2023-08-07T15:45:18+09:00</lastmod>
   </url><url>
     <loc>https://nok3zy.github.io/posts/java-thread/</loc>
     <lastmod>2023-08-07T15:45:18+09:00</lastmod>
   </url><url>
+    <loc>https://nok3zy.github.io/tags/os/</loc>
+    <lastmod>2023-08-07T15:45:18+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/thread/</loc>
+    <lastmod>2023-08-07T15:45:18+09:00</lastmod>
+  </url><url>
     <loc>https://nok3zy.github.io/posts/java-gc/</loc>
     <lastmod>2023-08-05T20:49:40+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/jvm/</loc>
+    <lastmod>2023-08-05T20:49:40+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/jpa/</loc>
+    <lastmod>2023-07-22T17:50:41+09:00</lastmod>
+  </url><url>
+    <loc>https://nok3zy.github.io/tags/optimization/</loc>
+    <lastmod>2023-07-22T17:50:41+09:00</lastmod>
   </url><url>
     <loc>https://nok3zy.github.io/posts/optimize-api/</loc>
     <lastmod>2023-07-22T17:50:41+09:00</lastmod>
@@ -27,9 +54,6 @@
     <lastmod>2023-07-06T22:57:22+09:00</lastmod>
   </url><url>
     <loc>https://nok3zy.github.io/posts/gateway/</loc>
-    <lastmod>2023-07-06T22:57:22+09:00</lastmod>
-  </url><url>
-    <loc>https://nok3zy.github.io/tags/</loc>
     <lastmod>2023-07-06T22:57:22+09:00</lastmod>
   </url><url>
     <loc>https://nok3zy.github.io/posts/msa-observility/</loc>
@@ -67,9 +91,6 @@
   </url><url>
     <loc>https://nok3zy.github.io/tags/pipeline/</loc>
     <lastmod>2023-04-21T22:04:13+09:00</lastmod>
-  </url><url>
-    <loc>https://nok3zy.github.io/tags/kafka/</loc>
-    <lastmod>2023-04-02T19:18:02+09:00</lastmod>
   </url><url>
     <loc>https://nok3zy.github.io/posts/lets-use-kafka/</loc>
     <lastmod>2023-04-02T19:18:02+09:00</lastmod>

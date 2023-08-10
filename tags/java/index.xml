@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Nok</title>
+    <link>https://nok3zy.github.io/tags/java/</link>
+    <description>Recent content in Java on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Aug 2023 15:45:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Thread</title>
+      <link>https://nok3zy.github.io/posts/java-thread/</link>
+      <pubDate>Mon, 07 Aug 2023 15:45:18 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/java-thread/</guid>
+      <description>&amp;ldquo;프로세스와 쓰레드의 차이를 아세요?&amp;rdquo;
+흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
+프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.
+둘의 차이는 쓰레드의 특성을 생각해보면 쉽다. 쓰레드는 프로세스 내에서 Code, Data, Heap을 쓰레드끼리 공유한다. 그리고 각 쓰레드는 각자의 Stack은 따로 가지고 있는다.
+반면, 프로세스는 Code,Data,Heap, Stack 을 다른 프로세스와 공유하지 않는다. 이것이 멀티 프로세스보다 멀티 쓰레드가 효율적인 이유다.</description>
+    </item>
+    
+    <item>
+      <title>Java GC</title>
+      <link>https://nok3zy.github.io/posts/java-gc/</link>
+      <pubDate>Sat, 05 Aug 2023 20:49:40 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/java-gc/</guid>
+      <description>GC(Garbage Collecotor)는 사용하지 않는 메모리들을 정리해준다. JVM에서도 GC를 통해서 사용하지 않는 메모리들을 다시 사용가능한 상태로 만든다. 이것이 어떻게 동작하는 지 알기 위해서는 먼저 JVM의 메모리 구조를 알아야한다.
+JVM Memory 🔗 JVM Memory 구조는 위의 사진처럼 5개의 영역으로 구분할 수 있다.
+Method와 Heap은 모든 쓰레드가 공유하는 영역이고, 나머지 Stack, PC Register, Native Method Stack은 각 쓰레드가 하나씩 부여받는다.
+Method Class, Interface, Method, field, Static variable 등이 저장되는 영역.
+Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.</description>
+    </item>
+    
+  </channel>
+</rss>
