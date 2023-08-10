@@ -67,18 +67,17 @@
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/java-gc/'>Java GC</a></h1>
+            <h1 class="title"><a href='/posts/db-connectionpool/'>DB ConnectionPool</a></h1>
             <div class ="date">
-                <time datetime="2023-08-05 20:49:40 &#43;0900 KST">Aug 5, 2023</time>  
+                <time datetime="2023-08-10 21:12:18 &#43;0900 KST">Aug 10, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">GC(Garbage Collecotor)는 사용하지 않는 메모리들을 정리해준다. JVM에서도 GC를 통해서 사용하지 않는 메모리들을 다시 사용가능한 상태로 만든다. 이것이 어떻게 동작하는 지 알기 위해서는 먼저 JVM의 메모리 구조를 알아야한다.
-JVM Memory 🔗 JVM Memory 구조는 위의 사진처럼 5개의 영역으로 구분할 수 있다.
-Method와 Heap은 모든 쓰레드가 공유하는 영역이고, 나머지 Stack, PC Register, Native Method Stack은 각 쓰레드가 하나씩 부여받는다.
-Method Class, Interface, Method, field, Static variable 등이 저장되는 영역.
-Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.</div>
+              <div class="summary">DB와 어플리케이션 간 통신을 하기 위한 연결점을 Connection이라 한다. 그리고 이를 미리 여러개를 만들어 놓은 것을 Connection Pool이라고 한다.
+Connection을 미리 만들어 놓는 이유는 서버와 DB를 연결할 때 드는 비용이 많이 들기 때문이다.
+TCP 와 ConnectionPool 🔗DBMS와의 통신은 TCP로 이루어진다. 네트워크에 대해 공부했다면, 많이들 TCP와 UDP에 대해서 많이 들어봤을 것이다.
+TCP는 흔히들 신뢰성이 있다고 말하는데, 그 이유는 3-way handshake 과정을 통해 연결성을 보장한 통신을 시작하기 때문이다. TCP는 자신이 보낸 데이터에 대해 상대방이 받았다는 의미의 응답 패킷을 다시 받아야 통신이 정상적으로 이루어졌다고 생각한다.</div>
           
 
         </section>
@@ -87,17 +86,18 @@ Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/optimize-api/'>Optimize API</a></h1>
+            <h1 class="title"><a href='/posts/why-kafka-is-fast/'>Why Kafka is fast</a></h1>
             <div class ="date">
-                <time datetime="2023-07-22 17:50:41 &#43;0900 KST">Jul 22, 2023</time>  
+                <time datetime="2023-08-09 19:14:18 &#43;0900 KST">Aug 9, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">MongoRepository(혹은 JpaRepository)같은 ORM 인터페이스를 통해서 Entity를 조회했을 때, 어떻게 쿼리를 보낼까?
-처음에는 DB.Collection.findOne() 혹은 Select * from Table LIMIT 1 정도의 쿼리를 보내지 않을까? 이지 않을까 추측했다. 테이블(혹은 도큐먼트)의 모든 필드를 가져와서 내부적으로 맵핑을 하지 않을까 싶었다. JPA는 내부적으로 Mapper가 존재해서 Document to Object로 변경해주는 작업을 하고 있는 걸로 아는데, 그렇다면 모든 필드를 조회하고, 코드에서 필드로 명시된 경우에만 맵핑을 해주는 것은 아닐까?
-아래의 경우에는 어떻게 찾을까?
-//Product Java Code Product{ id name } //Product Collecion Product{ id name price description } Java code에서는 Product의 seller라는 필드를 포함하고 있지 않는다.</div>
+              <div class="summary">카프카는 디스크를 사용하는데 어떻게 빠를까?
+근데 빠르다는 것은 좀 모호한 것 같다. 레이턴시가 짧다는 걸까? 처리량이 많다는 걸까? 카프카는 대용량 데이터를 처리하는 것을 최적화했다.
+사람들이 카프카가 빠르다고 하는 의미는, 보통 카프카가 큰 데이터를 효율적으로 옮기는 능력이 좋다는 것을 의미한다.
+카프카의 성능이 좋은 이유에는 많은 요소가 있겠지만, Sequential IO 와 Zero Copy , 이 두 가지가 큰 이점을 제공한다.
+Sequential IO 🔗일반적으로 디스크에 접근하는 것이 메모리 접근보다 느린 것은 맞다. 하지만 디스크가 느린 이유는 바로 data-access 방식의 문제이다.</div>
           
 
         </section>
@@ -106,17 +106,18 @@ Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.
         
         <section class="item">
           <div>
-            <h1 class="title"><a href='/posts/gateway/'>Gateway</a></h1>
+            <h1 class="title"><a href='/posts/java-thread/'>Java Thread</a></h1>
             <div class ="date">
-                <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>  
+                <time datetime="2023-08-07 15:45:18 &#43;0900 KST">Aug 7, 2023</time>  
             </div>
           </div>
 
           
-              <div class="summary">트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
-하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
-이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.
-그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까?</div>
+              <div class="summary">“프로세스와 쓰레드의 차이를 아세요?”
+흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
+프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.
+둘의 차이는 쓰레드의 특성을 생각해보면 쉽다. 쓰레드는 프로세스 내에서 Code, Data, Heap을 쓰레드끼리 공유한다. 그리고 각 쓰레드는 각자의 Stack은 따로 가지고 있는다.
+반면, 프로세스는 Code,Data,Heap, Stack 을 다른 프로세스와 공유하지 않는다. 이것이 멀티 프로세스보다 멀티 쓰레드가 효율적인 이유다.</div>
           
 
         </section>

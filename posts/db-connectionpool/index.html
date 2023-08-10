@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>DB ConnectionPool | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="DB와 어플리케이션 간 통신을 하기 위한 연결점을 Connection이라 한다. 그리고 이를 미리 여러개를 만들어 놓은 것을 Connection Pool이라고 한다.
+Connection을 미리 만들어 놓는 이유는 서버와 DB를 연결할 때 드는 비용이 많이 들기 때문이다.
+TCP 와 ConnectionPool 🔗DBMS와의 통신은 TCP로 이루어진다. 네트워크에 대해 공부했다면, 많이들 TCP와 UDP에 대해서 많이 들어봤을 것이다.
+TCP는 흔히들 신뢰성이 있다고 말하는데, 그 이유는 3-way handshake 과정을 통해 연결성을 보장한 통신을 시작하기 때문이다. TCP는 자신이 보낸 데이터에 대해 상대방이 받았다는 의미의 응답 패킷을 다시 받아야 통신이 정상적으로 이루어졌다고 생각한다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">DB ConnectionPool</h1>
+
+    <div class="tip">
+        <time datetime="2023-08-10 21:12:18 &#43;0900 KST">Aug 10, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          258 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          2 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <p>DB와 어플리케이션 간 통신을 하기 위한 연결점을 Connection이라 한다. 그리고 이를 미리 여러개를 만들어 놓은 것을 Connection Pool이라고 한다.</p>
+<p><p class="markdown-image">
+  <img src="/images/DB_ConnectionPool.png" alt="Connection Pool"  />
+</p></p>
+<p>Connection을 미리 만들어 놓는 이유는 <strong>서버와 DB를 연결할 때 드는 비용</strong>이 많이 들기 때문이다.</p>
+<h2 id="tcp-와-connectionpool">TCP 와 ConnectionPool <a href="#tcp-%ec%99%80-connectionpool" class="anchor">🔗</a></h2><p>DBMS와의 통신은 TCP로 이루어진다. 네트워크에 대해 공부했다면, 많이들 TCP와 UDP에 대해서 많이 들어봤을 것이다.</p>
+<p><p class="markdown-image">
+  <img src="/images/DB_TCP.png" alt="TCP"  />
+</p></p>
+<p>TCP는 흔히들 신뢰성이 있다고 말하는데, 그 이유는 3-way handshake 과정을 통해 연결성을 보장한 통신을 시작하기 때문이다. TCP는 자신이 보낸 데이터에 대해 상대방이 받았다는 의미의 응답 패킷을 다시 받아야 통신이 정상적으로 이루어졌다고 생각한다.</p>
+<p>생각해보면 DB와 서버는 안정적으로 연결되어 하나의 트랜잭션을 제대로 수행해야 하기 때문에,TCP를 통해 연결되야 하는 것은 당연해보인다. 만약 연결이 잘못되어서 몇몇 요청을 유실해버린다면, DB를 신뢰하지 못하는 일이 벌어질 것이다.</p>
+<p><p class="markdown-image">
+  <img src="/images/DB_3way.png" alt="3-way-handshake"  />
+</p></p>
+<p>TCP는 처음 연결할 때, 3-way handshake를 통해 연결성을 보장하고, 또 연결을 끊을 때, 4-way handshake를 수행한다. 만약 커넥션풀을 필요할 때마다 만들고 버린다면 이 과정을 계속해서 수행해야하는데 이는 엄청난 리소스의 낭비다.</p>
+<p>따라서 성능 저하를 피하기 위해서 미리 연결을 해놓는 것이 바로 Connection Pool이다.</p>
+<h2 id="connection-pool">Connection Pool <a href="#connection-pool" class="anchor">🔗</a></h2><p>Connection Pool은 미리 만들어 놓은 Connection을 재사용할 수 있게 한다. 서버는 처음 실행될 떄, 미리 DB와의 Connection을 다 만들어놓고 앞으로 DB에 보낼 요청들을 원할하게 보낼 수 있도록 한다. 커넥션을 만들 필요가 없으니 최대한 빠르게 요청을 전달하고 그에 대한 응답을 받을 수 있게 된다.</p>
+<p>그렇다면 만약 요청이 잡아놓은 커넥션풀보다 많으면 어떻게 될까? 더 많은 커넥션을 만들까? 그렇지 않다.</p>
+<p>동시접속을 해 커넥션이 부족할 경우에는 커넥션이 반환될 때까지 대기한다. 따라서 이 부분이 서비스에서 고려를 해야하는 부분이다. 많은 사용자가 몰리는 경우, 커넥션풀에 미리 만들어놓을 커넥션 개수를 늘려야만 정상적으로 서비스를 이용할 수 있게 된다. 그러면 서비스를 유지하기 위한 비용은 증가하게 된다. 따라서 커넥션풀을 설정할 때 적당한 값으로 적용해야 한다.</p>
+
+    </div>
+
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
