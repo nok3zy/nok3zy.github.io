@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 07 Aug 2023 15:45:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Java Thread</title>
-      <link>https://nok3zy.github.io/posts/java-thread/</link>
+      <title>Thread In Java</title>
+      <link>https://nok3zy.github.io/posts/thread-in-java/</link>
       <pubDate>Mon, 07 Aug 2023 15:45:18 +0900</pubDate>
       
-      <guid>https://nok3zy.github.io/posts/java-thread/</guid>
+      <guid>https://nok3zy.github.io/posts/thread-in-java/</guid>
       <description>&amp;ldquo;프로세스와 쓰레드의 차이를 아세요?&amp;rdquo;
 흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
 프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.

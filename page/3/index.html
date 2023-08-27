@@ -67,6 +67,25 @@
         
         <section class="item">
           <div>
+            <h1 class="title"><a href='/posts/gateway/'>Gateway</a></h1>
+            <div class ="date">
+                <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>  
+            </div>
+          </div>
+
+          
+              <div class="summary">트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
+하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
+이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.
+그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까?</div>
+          
+
+        </section>
+    
+        
+        
+        <section class="item">
+          <div>
             <h1 class="title"><a href='/posts/msa-observility/'>MSA Observility</a></h1>
             <div class ="date">
                 <time datetime="2023-06-28 19:44:37 &#43;0900 KST">Jun 28, 2023</time>  
@@ -96,24 +115,6 @@ MSA 환경에서의 모니터링 🔗클라우드, MSA 아키텍처 등은 기�
               <div class="summary">Dynamic Creative 에서 상품 데이터를 Catalog로 만들면서, Document에 존재하는 국제화 데이터를 가공할 필요가 있었다. 상품의 Title이나 Description 등의 정보들이 있었고, 또한 해당 국가에서 접근이 가능한 상품인지 아닌지 등을 따져야하는 경우가 있었다.
 여기서 생긴 문제는 필요한 데이터의 키값이 다르게 설정되어 있었다는 것이다.
 Title { KR : &#34;커피&#34;, US : &#34;Coffee&#34;, JP : &#34;コーヒー&#34; } Description { ko : &#34;안녕하세요&#34;, en : &#34;Hello&#34;, ja : &#34;こんにちは&#34; } 이런 식으로 각 국가마다 노출해줄 데이터의 키값이 달랐다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/upload-updated-catalog-every-n-hours/'>Upload updated catalog every N hours</a></h1>
-            <div class ="date">
-                <time datetime="2023-05-26 16:32:39 &#43;0900 KST">May 26, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">Dynamic Creative 프로젝트를 진행하면서, 업데이트가 되는 상품 정보를 모델에 적용시킬 수 있도록 해당 정보들을 올려달라는 요구사항을 받았다. 상품 정보는 업데이트가 정말 많이 일어나는 collection이었다. 그래서 번경이 일어나는 곳에서 이벤트를 감지해서 하기는 무리가 있었고 더군다나 여러 MSA에서 사용하고 있었기 때문에 더 말이 되지 않았다.
-ChangeStream 🔗결국 선택한 방법은 Mongo의 ChangeStream을 이용하는 것이었다. 그리고 Spring MongoTemplate을 이용해서, 아래와 같이 ChangeStream에 접근할 수 있었다.
-final MongoCollection&lt;Document&gt; collection = mongoTemplate.getCollection(COLLECTION_NAME); final ChangeStreamIterable&lt;Document&gt; changeStream = collection.</div>
           
 
         </section>

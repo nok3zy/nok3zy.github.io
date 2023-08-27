@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Async on Nok</title>
+    <link>https://nok3zy.github.io/tags/async/</link>
+    <description>Recent content in Async on Nok</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Aug 2023 15:13:11 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/async/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Async Programming</title>
+      <link>https://nok3zy.github.io/posts/java-async-programming/</link>
+      <pubDate>Tue, 22 Aug 2023 15:13:11 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/java-async-programming/</guid>
+      <description>자바에서 아래와 같이 두 개의 서비스에 요청을 보내고 그 결과가 오면 처리를 해야하는 로직이 있다면 어떻게 수행할까?
+User user = userService.callGetUser(); Account account = accountService.callGetAccount(); Finance finance = Finance.of(user,account); return finance; 당연히 차례대로 진행한다. user 정보를 얻고, account 정보를 얻고 Finance 객체를 만들어서 반환한다. 로직만으로 보면 문제되는 것이 없어보인다.
+하지만 그 과정에서 쓰레드의 Idling이 문제가 된다.
+서버의 쓰레드는 Client에게 Request가 오면 그에 대한 응답값을 내려주기 위해 작업을 수행한다. 하나의 쓰레드가 응답값을 구할 때까지 계속 책임감있게 작업을 잡고 있는다.</description>
+    </item>
+    
+  </channel>
+</rss>

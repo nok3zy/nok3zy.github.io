@@ -67,6 +67,26 @@
         
         <section class="item">
           <div>
+            <h1 class="title"><a href='/posts/thread-in-java/'>Thread In Java</a></h1>
+            <div class ="date">
+                <time datetime="2023-08-07 15:45:18 &#43;0900 KST">Aug 7, 2023</time>  
+            </div>
+          </div>
+
+          
+              <div class="summary">“프로세스와 쓰레드의 차이를 아세요?”
+흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
+프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.
+둘의 차이는 쓰레드의 특성을 생각해보면 쉽다. 쓰레드는 프로세스 내에서 Code, Data, Heap을 쓰레드끼리 공유한다. 그리고 각 쓰레드는 각자의 Stack은 따로 가지고 있는다.
+반면, 프로세스는 Code,Data,Heap, Stack 을 다른 프로세스와 공유하지 않는다. 이것이 멀티 프로세스보다 멀티 쓰레드가 효율적인 이유다.</div>
+          
+
+        </section>
+    
+        
+        
+        <section class="item">
+          <div>
             <h1 class="title"><a href='/posts/java-gc/'>Java GC</a></h1>
             <div class ="date">
                 <time datetime="2023-08-05 20:49:40 &#43;0900 KST">Aug 5, 2023</time>  
@@ -98,25 +118,6 @@ Heap new 키워드로 생성되는 객체(혹은 배열)이 저장되는 영역.
 처음에는 DB.Collection.findOne() 혹은 Select * from Table LIMIT 1 정도의 쿼리를 보내지 않을까? 이지 않을까 추측했다. 테이블(혹은 도큐먼트)의 모든 필드를 가져와서 내부적으로 맵핑을 하지 않을까 싶었다. JPA는 내부적으로 Mapper가 존재해서 Document to Object로 변경해주는 작업을 하고 있는 걸로 아는데, 그렇다면 모든 필드를 조회하고, 코드에서 필드로 명시된 경우에만 맵핑을 해주는 것은 아닐까?
 아래의 경우에는 어떻게 찾을까?
 //Product Java Code Product{ id name } //Product Collecion Product{ id name price description } Java code에서는 Product의 seller라는 필드를 포함하고 있지 않는다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/gateway/'>Gateway</a></h1>
-            <div class ="date">
-                <time datetime="2023-07-06 22:57:22 &#43;0900 KST">Jul 6, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">트래픽이 적고 서버가 작다면 위와 같이 Client에 Server에 직접 요청을 보내도 큰 문제가 생기지 않는다.
-하지만 트래픽이 많아져서 서버를 늘리게 되었고 각 서버들이 공통된 로직을 처리해야한다면 문제가 발생한다.
-이런 모양의 아키텍처가 구성되었을 때, 각 서버 담당자는 Auth 서버에 대한 릴리즈를 모두 파악하고 있어야 한다. 만약에 업데이트를 한번 놓치면 어떤 오류가 발생할지 모른다. 따라서 이는 꽤나 비효율적인 구조라고 할 수 있다.
-그렇다면 앞에 공통 로직을 수행하는 서버를 하나 두는 것은 어떨까?</div>
           
 
         </section>

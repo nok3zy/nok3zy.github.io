@@ -6,13 +6,25 @@
     <description>Recent content in Thread on Nok</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Aug 2023 15:45:18 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/thread/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Aug 2023 15:13:11 +0900</lastBuildDate><atom:link href="https://nok3zy.github.io/tags/thread/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Java Thread</title>
-      <link>https://nok3zy.github.io/posts/java-thread/</link>
+      <title>Java Async Programming</title>
+      <link>https://nok3zy.github.io/posts/java-async-programming/</link>
+      <pubDate>Tue, 22 Aug 2023 15:13:11 +0900</pubDate>
+      
+      <guid>https://nok3zy.github.io/posts/java-async-programming/</guid>
+      <description>자바에서 아래와 같이 두 개의 서비스에 요청을 보내고 그 결과가 오면 처리를 해야하는 로직이 있다면 어떻게 수행할까?
+User user = userService.callGetUser(); Account account = accountService.callGetAccount(); Finance finance = Finance.of(user,account); return finance; 당연히 차례대로 진행한다. user 정보를 얻고, account 정보를 얻고 Finance 객체를 만들어서 반환한다. 로직만으로 보면 문제되는 것이 없어보인다.
+하지만 그 과정에서 쓰레드의 Idling이 문제가 된다.
+서버의 쓰레드는 Client에게 Request가 오면 그에 대한 응답값을 내려주기 위해 작업을 수행한다. 하나의 쓰레드가 응답값을 구할 때까지 계속 책임감있게 작업을 잡고 있는다.</description>
+    </item>
+    
+    <item>
+      <title>Thread In Java</title>
+      <link>https://nok3zy.github.io/posts/thread-in-java/</link>
       <pubDate>Mon, 07 Aug 2023 15:45:18 +0900</pubDate>
       
-      <guid>https://nok3zy.github.io/posts/java-thread/</guid>
+      <guid>https://nok3zy.github.io/posts/thread-in-java/</guid>
       <description>&amp;ldquo;프로세스와 쓰레드의 차이를 아세요?&amp;rdquo;
 흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
 프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Java Async Programming | Nok</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="자바에서 아래와 같이 두 개의 서비스에 요청을 보내고 그 결과가 오면 처리를 해야하는 로직이 있다면 어떻게 수행할까?
+User user = userService.callGetUser(); Account account = accountService.callGetAccount(); Finance finance = Finance.of(user,account); return finance; 당연히 차례대로 진행한다. user 정보를 얻고, account 정보를 얻고 Finance 객체를 만들어서 반환한다. 로직만으로 보면 문제되는 것이 없어보인다.
+하지만 그 과정에서 쓰레드의 Idling이 문제가 된다.
+서버의 쓰레드는 Client에게 Request가 오면 그에 대한 응답값을 내려주기 위해 작업을 수행한다. 하나의 쓰레드가 응답값을 구할 때까지 계속 책임감있게 작업을 잡고 있는다.">
+<meta name="generator" content="Hugo 0.109.0">
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">Java Async Programming</h1>
+
+    <div class="tip">
+        <time datetime="2023-08-22 15:13:11 &#43;0900 KST">Aug 22, 2023</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          417 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          2 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <p>자바에서 아래와 같이 두 개의 서비스에 요청을 보내고 그 결과가 오면 처리를 해야하는 로직이 있다면 어떻게 수행할까?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span>User user <span style="color:#f92672">=</span> userService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetUser</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Account account <span style="color:#f92672">=</span> accountService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetAccount</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Finance finance <span style="color:#f92672">=</span> Finance<span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>user<span style="color:#f92672">,</span>account<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> finance<span style="color:#f92672">;</span>
+</span></span></code></pre></div><p>당연히 차례대로 진행한다. user 정보를 얻고, account 정보를 얻고 Finance 객체를 만들어서 반환한다. 로직만으로 보면 문제되는 것이 없어보인다.</p>
+<p>하지만 그 과정에서 <strong>쓰레드의 Idling</strong>이 문제가 된다.</p>
+<p><p class="markdown-image">
+  <img src="/images/async_WS.png" alt="Idling Thread"  />
+</p></p>
+<p>서버의 쓰레드는 Client에게 Request가 오면 그에 대한 응답값을 내려주기 위해 작업을 수행한다. 하나의 쓰레드가 응답값을 구할 때까지 계속 책임감있게 작업을 잡고 있는다.</p>
+<p>하지만 서버의 쓰레드는 한정적이기 때문에 요청이 많아지게 되면 이러한 것이 문제가 된다. 더 이상 요청을 응대할 쓰레드가 남지 않아, 가용한 쓰레드가 나올 때까지 요청이 대기하게 된다.(혹은 timeout이 발생한다.)</p>
+<p>따라서 위 코드에서 문제가 되는 것은 외부 시스템으로 보낸 요청이 얼마나 오래 걸릴지 모르는데 동기적으로 수행한 것이 쓰레드의 Idling을 야기한다.</p>
+<p><p class="markdown-image">
+  <img src="/images/async_NM.png" alt="n&#43;m idling"  />
+</p></p>
+<p>외부 서비스인 UserService 로 getUser 요청을 보낸 이후로, 쓰레드는 응답이 오기를 기다린다(Idle). 응답을 받으면 AccountService로 요청을 보내고 다시 응답을 기다린다. 이런 과정을 거쳐서 Finance 객체를 만들게 되는 것이다.</p>
+<p>요청을 보낸 동안 쓰레드는 오매불망 응답을 기다리고 있어, 힘이 있음에도 다른 일을 하지 못한다. 리소스가 낭비되는 것이다.</p>
+<h2 id="async">Async <a href="#async" class="anchor">🔗</a></h2><p>자바는 Java 8 부터 CompletableFuture를 통해 Async하게 동작을 실행할 수 있게 되었다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>CompletableFuture<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userFuture <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> userService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetUser</span><span style="color:#f92672">());</span>
+</span></span></code></pre></div><p>CompletableFuture는 이런 식으로 사용하면 되는데 구체적인 사용방법은 생략하도록 하겠다. CompletableFuture를 사용해 요청을 보내면 응답이 오는 것을 기다리지 않고 다음 동작을 수행하게 된다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span>CompletableFuture<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userFuture <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> userService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetUser</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CompletableFuture<span style="color:#f92672">&lt;</span>Account<span style="color:#f92672">&gt;</span> accountFuture <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> accountService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetAccount</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 중략
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>Finance finance <span style="color:#f92672">=</span> Finance<span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>user<span style="color:#f92672">,</span>account<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> finance<span style="color:#f92672">;</span>
+</span></span></code></pre></div><p>이렇게 코드를 작성하게 되면, 다른 서비스로 요청을 보내는 callGetUser, callGetAccount 가 동시에 실행된다.
+따라서 해당 코드는 max(callGetUser,callGetAccount)의 시간만 소요하면 된다.</p>
+<p><p class="markdown-image">
+  <img src="/images/async_MaxNM.png" alt="n&#43;m idling"  />
+</p></p>
+<h2 id="blocking">Blocking <a href="#blocking" class="anchor">🔗</a></h2><p>위에서 본 코드에서 생략한 부분을 채워넣으면 아래와 같다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span>CompletableFuture<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> userFuture <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> userService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetUser</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CompletableFuture<span style="color:#f92672">&lt;</span>Account<span style="color:#f92672">&gt;</span> accountFuture <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> accountService<span style="color:#f92672">.</span><span style="color:#a6e22e">callGetAccount</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// *** 생략된 부분 ***
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>CompletableFuture<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">allOf</span><span style="color:#f92672">(</span>userFuture<span style="color:#f92672">,</span>accountFuture<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>future<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>  <span style="color:#75715e">// Check if user and account response are.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>User user <span style="color:#f92672">=</span> userFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>Account account <span style="color:#f92672">=</span> accountFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// ***
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>Finance finance <span style="color:#f92672">=</span> Finance<span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>user<span style="color:#f92672">,</span>account<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> finance<span style="color:#f92672">;</span>
+</span></span></code></pre></div><p><code>join()</code>이라는 함수는 값을 가져오는 함수인데 값이 없을 때는 당연히 동작하지 못한다. 따라서 <code>join()</code>한 순간부터는 값을 가져올 때까지 계속 대기하는 상태가 된다. 쓰레드가 대기하는 것을 피하기 위해서 CompletableFuture를 사용했어도 여전히 대기(idle)를 하게되는 것이다.</p>
+<p>대기하는 시간동안 Client로부터 요청이 밀려들어오면 당연히 위에서 말한 문제가 발생한다. 물론 전보다는 효율적으로 쓰레드를 사용하고 있지만 좀 더 개선할 수 있는 여지가 있어보인다.</p>
+<p>정리하자면, Thread-based concurrency는 문제를 일부를 해결해주기는 하지만 완벽하게 해결하지는 못한다는 것이다. 더욱이 자바에서 사용하는 네이티브 쓰레드는 context-switching에서도 비용이 발생한다.</p>
+<p>웹 어플리케이션이 더 많은 요청에 받을 수록 쓰레드 모델은 점점 더 느려지게 된다. 그래서 상대적으로 적은 수의 쓰레드로 더 많은 요청을 처리할 수 있는 방법이 필요했다.</p>
+<p>이러한 내용이 Reactive Programming을 도입하게 되는 주요 동기 중 하나이다.</p>
+
+    </div>
+
+    
+        <div class="tags">
+            
+                <a href="https://nok3zy.github.io/tags/java">Java</a>
+            
+                <a href="https://nok3zy.github.io/tags/async">Async</a>
+            
+                <a href="https://nok3zy.github.io/tags/thread">Thread</a>
+            
+        </div>
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+        <div id="social">
+
+
+    <a class="symbol" href="https://github.com/nok3zy" rel="me" target="_blank">
+        
+        <svg fill="#bbbbbb" width="28" height="28"  viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Github</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Social-Icons---Rounded-Black" transform="translate(-264.000000, -939.000000)">
+            <g id="Github" transform="translate(264.000000, 939.000000)">
+                <path d="M8,72 L64,72 C68.418278,72 72,68.418278 72,64 L72,8 C72,3.581722 68.418278,-8.11624501e-16 64,0 L8,0 C3.581722,8.11624501e-16 -5.41083001e-16,3.581722 0,8 L0,64 C5.41083001e-16,68.418278 3.581722,72 8,72 Z" id="Rounded" fill="#bbbbbb"></path>
+                <path d="M35.9985,13 C22.746,13 12,23.7870921 12,37.096644 C12,47.7406712 18.876,56.7718301 28.4145,59.9584121 C29.6145,60.1797862 30.0525,59.4358488 30.0525,58.7973276 C30.0525,58.2250681 30.0315,56.7100863 30.0195,54.6996482 C23.343,56.1558981 21.9345,51.4693938 21.9345,51.4693938 C20.844,48.6864054 19.2705,47.9454799 19.2705,47.9454799 C17.091,46.4500754 19.4355,46.4801943 19.4355,46.4801943 C21.843,46.6503662 23.1105,48.9634994 23.1105,48.9634994 C25.2525,52.6455377 28.728,51.5823398 30.096,50.9649018 C30.3135,49.4077535 30.9345,48.3460615 31.62,47.7436831 C26.2905,47.1352808 20.688,45.0691228 20.688,35.8361671 C20.688,33.2052792 21.6225,31.0547881 23.1585,29.3696344 C22.911,28.7597262 22.0875,26.3110578 23.3925,22.9934585 C23.3925,22.9934585 25.4085,22.3459017 29.9925,25.4632101 C31.908,24.9285993 33.96,24.6620468 36.0015,24.6515052 C38.04,24.6620468 40.0935,24.9285993 42.0105,25.4632101 C46.5915,22.3459017 48.603,22.9934585 48.603,22.9934585 C49.9125,26.3110578 49.089,28.7597262 48.8415,29.3696344 C50.3805,31.0547881 51.309,33.2052792 51.309,35.8361671 C51.309,45.0917119 45.6975,47.1292571 40.3515,47.7256117 C41.2125,48.4695491 41.9805,49.9393525 41.9805,52.1877301 C41.9805,55.4089489 41.9505,58.0067059 41.9505,58.7973276 C41.9505,59.4418726 42.3825,60.1918338 43.6005,59.9554002 C53.13,56.7627944 60,47.7376593 60,37.096644 C60,23.7870921 49.254,13 35.9985,13" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
+    </a>
+
+
+</div>
+
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2023 
+       <span class="split">
+       </span>
+       Nok
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>

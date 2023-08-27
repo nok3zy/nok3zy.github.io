@@ -67,6 +67,25 @@
         
         <section class="item">
           <div>
+            <h1 class="title"><a href='/posts/java-async-programming/'>Java Async Programming</a></h1>
+            <div class ="date">
+                <time datetime="2023-08-22 15:13:11 &#43;0900 KST">Aug 22, 2023</time>  
+            </div>
+          </div>
+
+          
+              <div class="summary">자바에서 아래와 같이 두 개의 서비스에 요청을 보내고 그 결과가 오면 처리를 해야하는 로직이 있다면 어떻게 수행할까?
+User user = userService.callGetUser(); Account account = accountService.callGetAccount(); Finance finance = Finance.of(user,account); return finance; 당연히 차례대로 진행한다. user 정보를 얻고, account 정보를 얻고 Finance 객체를 만들어서 반환한다. 로직만으로 보면 문제되는 것이 없어보인다.
+하지만 그 과정에서 쓰레드의 Idling이 문제가 된다.
+서버의 쓰레드는 Client에게 Request가 오면 그에 대한 응답값을 내려주기 위해 작업을 수행한다. 하나의 쓰레드가 응답값을 구할 때까지 계속 책임감있게 작업을 잡고 있는다.</div>
+          
+
+        </section>
+    
+        
+        
+        <section class="item">
+          <div>
             <h1 class="title"><a href='/posts/db-connectionpool/'>DB ConnectionPool</a></h1>
             <div class ="date">
                 <time datetime="2023-08-10 21:12:18 &#43;0900 KST">Aug 10, 2023</time>  
@@ -98,26 +117,6 @@ TCP는 흔히들 신뢰성이 있다고 말하는데, 그 이유는 3-way handsh
 사람들이 카프카가 빠르다고 하는 의미는, 보통 카프카가 큰 데이터를 효율적으로 옮기는 능력이 좋다는 것을 의미한다.
 카프카의 성능이 좋은 이유에는 많은 요소가 있겠지만, Sequential IO 와 Zero Copy , 이 두 가지가 큰 이점을 제공한다.
 Sequential IO 🔗일반적으로 디스크에 접근하는 것이 메모리 접근보다 느린 것은 맞다. 하지만 디스크가 느린 이유는 바로 data-access 방식의 문제이다.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/posts/java-thread/'>Java Thread</a></h1>
-            <div class ="date">
-                <time datetime="2023-08-07 15:45:18 &#43;0900 KST">Aug 7, 2023</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">“프로세스와 쓰레드의 차이를 아세요?”
-흔히 듣는 질문이다. 중요하니깐 많이들 물어보는 것이겠지만, 가끔 갑자기 물어보면 제대로 대답하기가 어려운 질문이기도 하다.
-프로세스는 실행된 프로그램의 인스턴스이다. 그리고 쓰레드는 프로세스 내의 실행 단위이다. 프로세스 내부에 쓰레드가 존재한다.
-둘의 차이는 쓰레드의 특성을 생각해보면 쉽다. 쓰레드는 프로세스 내에서 Code, Data, Heap을 쓰레드끼리 공유한다. 그리고 각 쓰레드는 각자의 Stack은 따로 가지고 있는다.
-반면, 프로세스는 Code,Data,Heap, Stack 을 다른 프로세스와 공유하지 않는다. 이것이 멀티 프로세스보다 멀티 쓰레드가 효율적인 이유다.</div>
           
 
         </section>
